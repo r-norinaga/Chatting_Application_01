@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MapperとXMLのマッピング -->
+<mapper namespace="katachi.spring.portfolio.repository.UserMapper">
+	<resultMap type="katachi.spring.portfolio.domain.user.model.MUser" id="MUser">
+		<id column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="email_address" property="emailAddress"/>
+		<result column="password" property="password"/>
+		<result column="password_confirmation" property="passwordConfirmation"/>
+		<result column="role" property="role"/>
+		<result column="deletion_flag" property="deletionFlag"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="updated_at" property="updatedAt"/>
+		<result column="deleted_at" property="deletedAt"/>
+	</resultMap>
+	
+	<insert id="insertOne">
+		insert into users(
+			user_name,
+			email_address,
+			password,
+			password_confirmation,
+			role,
+			deletion_flag,
+			created_at
+		)
+		values
+		(
+			#{userName},
+			#{emailAddress},
+			#{password},
+			#{password},
+			0,
+			0,
+			now()
+		)
+	</insert>
+
+	<select id="overlappingCheckUserName" resultType="string">
+		select user_name from users where user_name = #{userName} and deletion_flag = 0
+	</select>
+
+	<select id="overlappingCheckEmailAddress" resultType="string">
+		select user_name from users where email_address = #{emailAddress} and deletion_flag = 0
+	</select>
+	<select id="overlappingCheckUserIdAndUserName" resultType="MUser">
+		select * from users where user_id != #{userId} and user_name = #{userName} and deletion_flag = 0
+	</select>
+
+	<select id="overlappingCheckUserIdAndEmailAddress" resultType="MUser">
+		select * from users where user_id != #{userId} and email_address = #{emailAddress} and deletion_flag = 0
+	</select>	
+
+
+<!-- ログインユーザー情報取得 -->
+ <select id="findLoginUser" resultType="MUser">
+	 select
+	 	*
+	 from
+	 	users
+	 where
+	 	user_name = #{userName} and deletion_flag = 0
+ </select>
+ <select id="findUserPassword" resultType="string">
+	 select
+	 	password
+	 from
+	 	users
+	 where
+	 	user_id = #{userId} and deletion_flag = 0
+ </select>
+ 
+ <update id="updateUser">
+		update users
+			set
+				user_name = #{userName},
+				password = #{password},	
+				password_confirmation = #{passwordConfirmation},
+				email_address = #{emailAddress},
+				updated_at = now()
+			where
+					user_id = #{userId} and deletion_flag = 0
+	</update>
+ 
+ 
+
+</mapper>

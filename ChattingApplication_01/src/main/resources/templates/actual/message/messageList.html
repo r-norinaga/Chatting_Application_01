@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{actual/layout/layout}">
+	<head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<!-- レイアウト用CSS -->
+		<link rel="stylesheet" th:href="@{/css/messageList.css}">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+		<script th:src="@{/js/message/message.js}" defer></script>
+		<title th:text="#{talk.title.message.messageList}"></title>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<h1>チャットアプリ</h1>
+			<h2>トークルーム内</h2>
+			<div>
+				<div class="line-bc"><!--①LINE会話全体を囲う-->
+					<div th:each="message:${messageList}">
+						<th:block th:if="${message.userId == loginUser.userId}">
+							<!--③右コメント始-->
+							<div class="outer-part-of-my-comment">
+								<div class="chatting">
+									<div>
+										<div class="mycomment">
+								  			<p th:text="${message.content}"></p>
+										</div>
+										<br>
+										<div class="created_at">
+											<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--/③右コメント終-->
+						</th:block>	
+						<th:block th:unless="${message.userId == loginUser.userId}">
+							<!--②左コメント始-->
+							  <div class="balloon6">
+								<div class="faceicon">
+									<img th:src="${'/picture/' + message.mUser.image}" class="innerImage" alt="">
+								</div>
+							    <div class="chatting">
+									<div>
+										<div class="says">
+									        <p th:text="${message.content}"></p>
+								    	</div>
+								    	<br>
+								    	<div class="created_at">
+											<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+										</div>
+									</div>
+								    <div>
+										<p class="user-name" th:text="${message.mUser.userName}"></p>
+									</div>
+							    </div>
+							  </div>
+							  <!--②/左コメント終-->						
+						</th:block>
+					</div>
+			</div>
+			<!--/①LINE会話終了-->
+			<div class="posting-area">
+				<form method="post" id="message-form" th:action="@{/message/postMessage}" th:object="${messageForm}">
+					<table>
+						<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
+						<input type="hidden" id="roomId" name="roomId" th:value="${roomId}"/>
+						<tr>
+							<div>
+								<td>
+									<div class="form-group">
+										<textarea th:field="*{content}" class="form-control"></textarea>
+									</div>
+								</td>
+								<td>
+									<button type="button" class="btn btn-primary" th:text="#{user.btn.confirmation}" data-bs-toggle="modal" data-bs-target="#exampleModal">	
+									</button>
+								</td>
+							</div>
+						</tr>
+					</table>
+					<!-- モーダルの設定 -->
+					<div class="modal fade modal-fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+					  <div class="modal-dialog modal-dialog-scrollable">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h4 class="modal-title" id="exampleModalLabel">入力内容の確認</h4>
+					        <button type="button" class="close" data-bs-dismiss="modal" aria-label="閉じる">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div>
+					          <h5 class="text-muted">下記の内容のメッセージを送信致しますが、よろしいでしょうか？</h5>
+					        </div>
+					        <div>
+					          <h6 class="text-muted">メッセージ内容</h6>
+					          <p class="px-2" id="modalContent"></p>
+					        </div>
+					      </div>
+					      <div class="modal-footer">
+							<button type="button" id="submit_button" class="btn btn-primary w-100 mt-3" >送信</button>  
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+					      </div><!-- /.modal-footer -->
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+				</form>
+			</div>
+			</div>	
+			<script defer>
+				$(function() {
+					$('#exampleModal').on('show.bs.modal', function () {
+						var content = $('#content').val()
+						var modal = $(this)
+						modal.find('#modalContent').text(content)
+					})
+				})
+			</script>
+		</div>	
+	</body>
+</html>
