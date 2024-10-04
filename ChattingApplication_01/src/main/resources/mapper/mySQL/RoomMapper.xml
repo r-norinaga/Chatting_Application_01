@@ -19,7 +19,17 @@
 			and room_users.room_id = rooms.room_id
 		 where rooms.deletion_flag = 0
 	</select>
-		
+	
+	<select id="findRooms" resultMap="Room">
+		select * from rooms as rooms
+			join room_users as room_users
+			on room_users.user_id = #{userId}
+			and rooms.room_id = room_users.room_id
+		 where 
+		 	(rooms.deletion_flag = 0)
+			and	rooms.room_id = #{room.roomId}
+			or rooms.room_name = #{room.roomName}; 
+	</select>	
 	
 
 </mapper>

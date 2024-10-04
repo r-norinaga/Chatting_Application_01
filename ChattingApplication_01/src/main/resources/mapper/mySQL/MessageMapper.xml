@@ -36,7 +36,8 @@
 	
 	<select id="findMany" resultMap="message">
 		select messages.*,
-				
+<!--				users.*,-->
+<!--				room_users.*-->
 			   <!-- 
 			   messages.message_id as messages_message_id,
 			   messages.content as messages_content,
@@ -47,6 +48,7 @@
 			   messages.updated_at as messages_updated_at,
 			   messages.deleted_at as messages_deleted_at,
 			   -->
+			    
 			   users.user_id as muser_user_id,
 			   users.user_name as muser_user_name,
 			   users.email_address as muser_email_address,
@@ -56,10 +58,13 @@
 			   users.updated_at as muser_updated_at,
 			   users.deleted_at as muser_deleted_at,
 			   users.image as muser_image
+			    
 		  from messages
+		  inner join room_users
+		  	on messages.room_id = room_users.room_id
 		  inner join users
-			on messages.user_id = users.user_id
-		  where room_id = 1 and messages.deletion_flag = 0
+			on room_users.user_id = users.user_id
+		  where messages.room_id = #{roomId} and messages.deletion_flag = 0
 	</select>
 	<insert id="insertOne">
 		insert into messages(
