@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import jakarta.validation.constraints.NotBlank;
+import katachi.spring.portfolio.domain.user.model.MUser;
 import katachi.spring.portfolio.domain.user.model.RoomUser;
 import lombok.Data;
 
@@ -18,5 +19,7 @@ public class RoomCreationForm {
 	private String roomName; 
 	
 	private List<RoomUser> roomUserList;
+	
+	private List<MUser> mUserList;
 	
 }

@@ -1,5 +1,7 @@
 package katachi.spring.portfolio.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import katachi.spring.portfolio.domain.user.model.MUser;
@@ -26,4 +28,5 @@ public interface UserMapper {
 	 
 	 public void updateUser(int userId, String userName, String emailAddress, String password, String passwordConfirmation);
 	 
+	 public List<MUser> findMany();
 }

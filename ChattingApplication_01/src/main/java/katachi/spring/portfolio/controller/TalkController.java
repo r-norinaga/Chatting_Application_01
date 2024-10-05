@@ -132,7 +132,8 @@ public class TalkController {
 		MUser loginUser = userService.getLoginUser(user.getUsername());
 		model.addAttribute("loginUser", loginUser);
 		
-		
+		List<MUser> userList = userService.getUsers();
+		model.addAttribute("userList", userList);
 
 		return "actual/room/createRoom";
 

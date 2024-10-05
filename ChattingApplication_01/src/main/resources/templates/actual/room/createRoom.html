@@ -18,9 +18,6 @@ layout:decorate="~{actual/layout/layout}">
 				<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
 				<table class="table table-bordered" border="1">
 					<tr>
-						<th>
-							<label for="roomId" th:text="#{roomId}"></label>
-						</th>
 						<td>
 							<input type="text" th:field="*{roomId}" th:errorclass="is-invalid"/>
 							<div class="invalid-feedback" th:errors="*{roomId}"></div>
@@ -34,10 +31,18 @@ layout:decorate="~{actual/layout/layout}">
 							<input type="text" th:field="*{roomName}" th:errorclass="is-invalid"/>
 							<div class="invalid-feedback" th:errors="*{roomName}"></div>
 						</td>
-						<td>
-							<button class="btn btn-primary" type="submit">検索</button>	
-						</td>
-					</tr>					
+					</tr>
+					<tr class="user" th:each="user:${userList}">
+						<form method="post" id="search-room-form" th:action="@{/talk/createARoom}" th:object="${roomCreationForm.mUserList.mUser}">
+							<td>
+								<input type="text" name="*{userId}" th:value="${user.userId}" th:errorclass="is-invalid"/>
+								<input type="text" name="*{userName}" th:value="${user.userName}" th:errorclass="is-invalid"/>
+							</td>
+							<td>
+								<button class="btn btn-primary" type="submit">追加</button>	
+							</td>
+						</form>
+					</tr>				
 				</table>
 			</form>
 		</div>

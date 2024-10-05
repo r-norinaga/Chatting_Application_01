@@ -1,5 +1,7 @@
 package katachi.spring.portfolio.domain.user.service;
 
+import java.util.List;
+
 import katachi.spring.portfolio.domain.user.model.MUser;
 
 
@@ -16,5 +18,6 @@ public interface UserService {
 	public void updateUserOne(int userId, String userName, String emailAddress, String password, String passwordConfrimation);
 	public String getUserPassword(int userId);
 	
+	public List<MUser> getUsers();
 	
 }
