@@ -61,7 +61,8 @@
 			    
 		  from messages
 		  inner join room_users
-		  	on messages.room_id = room_users.room_id
+		  		on (messages.room_id = room_users.room_id
+		  			and messages.user_id = room_users.user_id)
 		  inner join users
 			on room_users.user_id = users.user_id
 		  where messages.room_id = #{roomId} and messages.deletion_flag = 0

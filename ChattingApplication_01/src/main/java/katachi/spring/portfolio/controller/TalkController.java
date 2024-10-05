@@ -19,6 +19,7 @@ import katachi.spring.portfolio.domain.user.model.MUser;
 import katachi.spring.portfolio.domain.user.model.Room;
 import katachi.spring.portfolio.domain.user.service.RoomService;
 import katachi.spring.portfolio.domain.user.service.UserService;
+import katachi.spring.portfolio.form.RoomCreationForm;
 import katachi.spring.portfolio.form.RoomSearchForm;
 
 @Controller
@@ -121,7 +122,43 @@ public class TalkController {
 		return "actual/room/roomSearchResult";
 	}
 	
+	@GetMapping("/createARoom")
+	public String getCreateARoom(Model model, @ModelAttribute RoomCreationForm roomCreationForm,  @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+
+		if(user != null) {
+			model.addAttribute("loginUserName", user.getUsername());
+		}
+		
+		MUser loginUser = userService.getLoginUser(user.getUsername());
+		model.addAttribute("loginUser", loginUser);
+		
+		
+
+		return "actual/room/createRoom";
+
+	}
 	
+	@PostMapping("/createARoom")
+	public String postCreateARoom(Model model, @ModelAttribute RoomCreationForm roomCreationForm, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+
+		if(user != null) {
+			model.addAttribute("loginUserName", user.getUsername());
+		}
+
+		MUser loginUser = userService.getLoginUser(user.getUsername());
+		model.addAttribute("loginUser", loginUser);
+		
+		Room room = modelMapper.map(roomCreationForm, Room.class);
+		
+		List<Room> roomList = roomService.searchForRooms(room, loginUser.getUserId());
+		
+		model.addAttribute("roomList", roomList);
+
+		redirectAttributes.addFlashAttribute("roomList", roomList);
+		
+//		return getRoomList(model, roomList,  user, redirectAttributes);
+		return "actual/room/roomSearchResult";
+	}
 	
 	
 	
