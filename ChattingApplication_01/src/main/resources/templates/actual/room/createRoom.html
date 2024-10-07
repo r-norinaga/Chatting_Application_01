@@ -17,12 +17,7 @@ layout:decorate="~{actual/layout/layout}">
 			<form method="post" id="search-room-form" th:action="@{/talk/createARoom}" th:object="${roomCreationForm}">
 				<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
 				<table class="table table-bordered" border="1">
-					<tr>
-						<td>
-							<input type="text" th:field="*{roomId}" th:errorclass="is-invalid"/>
-							<div class="invalid-feedback" th:errors="*{roomId}"></div>
-						</td>
-					</tr>
+					<input type="hidden" th:field="*{roomId}"/>
 					<tr>
 						<th>
 							<label for="roomName" th:text="#{roomName}"></label>
@@ -32,18 +27,22 @@ layout:decorate="~{actual/layout/layout}">
 							<div class="invalid-feedback" th:errors="*{roomName}"></div>
 						</td>
 					</tr>
+					<tr>
+						<td><h3>追加ユーザー選択</h3></td>
+					</tr>
 					<tr class="user" th:each="user:${userList}">
-						<form method="post" id="search-room-form" th:action="@{/talk/createARoom}" th:object="${roomCreationForm.mUserList.mUser}">
+						<th:block th:if="${loginUser.userId == user.userId}" >
+							<input type="hidden" name="userIds" th:value="${loginUser.userId}"/>
+						</th:block>
+						<th:block th:unless="${loginUser.userId == user.userId}">
 							<td>
-								<input type="text" name="*{userId}" th:value="${user.userId}" th:errorclass="is-invalid"/>
-								<input type="text" name="*{userName}" th:value="${user.userName}" th:errorclass="is-invalid"/>
-							</td>
-							<td>
-								<button class="btn btn-primary" type="submit">追加</button>	
-							</td>
-						</form>
+								<input type="checkbox" th:field="*{userIds}" th:value="${user.userId}"　th:text="${user.userName}"/>
+							</td>							
+						</th:block>
+
 					</tr>				
 				</table>
+				<button class="btn btn-primary" type="submit">確認</button>	
 			</form>
 		</div>
 	</body>

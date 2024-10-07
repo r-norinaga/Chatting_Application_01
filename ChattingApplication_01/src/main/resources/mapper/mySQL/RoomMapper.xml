@@ -30,6 +30,18 @@
 			and	rooms.room_id = #{room.roomId}
 			or rooms.room_name = #{room.roomName}; 
 	</select>	
-	
+	<insert id="insertOne">
+		insert into rooms(
+			room_name,
+			deletion_flag,
+			created_at
+		)
+		values
+		(
+			#{roomName},
+			0,
+			now()
+		)
+	</insert>
 
 </mapper>

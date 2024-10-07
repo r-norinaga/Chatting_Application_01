@@ -12,4 +12,7 @@ public interface RoomMapper {
 	public List<Room> findMany(int userId);
 	
 	public List<Room> findRooms(@Param("room")Room room, @Param("userId")int userId);
+	
+	
+	public void insertOne(Room room);
 }

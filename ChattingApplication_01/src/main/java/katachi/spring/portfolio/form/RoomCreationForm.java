@@ -1,12 +1,8 @@
 package katachi.spring.portfolio.form;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import jakarta.validation.constraints.NotBlank;
-import katachi.spring.portfolio.domain.user.model.MUser;
-import katachi.spring.portfolio.domain.user.model.RoomUser;
 import lombok.Data;
 
 @Data
@@ -18,8 +14,10 @@ public class RoomCreationForm {
 	@NotBlank
 	private String roomName; 
 	
-	private List<RoomUser> roomUserList;
+	private int[] userIds;
 	
-	private List<MUser> mUserList;
+//	private List<RoomUser> roomUserList;
+//	
+//	private List<MUser> mUserList;
 	
 }

@@ -24,4 +24,11 @@ public class RoomServiceImpl implements RoomService{
 	public List<Room> searchForRooms(Room room, int userId) {
 		return roomMapper.findRooms(room, userId);
 	}
+	
+	@Override
+	public void registerARoom(Room room) {
+		roomMapper.insertOne(room);
+	}
+	
+	
 }

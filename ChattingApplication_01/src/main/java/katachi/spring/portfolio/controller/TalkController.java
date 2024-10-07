@@ -1,5 +1,6 @@
 package katachi.spring.portfolio.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -151,11 +152,20 @@ public class TalkController {
 		
 		Room room = modelMapper.map(roomCreationForm, Room.class);
 		
-		List<Room> roomList = roomService.searchForRooms(room, loginUser.getUserId());
-		
-		model.addAttribute("roomList", roomList);
+		ArrayList<Integer> userIds = new ArrayList<>() ;
+		for(int aUserId:roomCreationForm.getUserIds()) {
+			userIds.add(aUserId);
+		}
 
-		redirectAttributes.addFlashAttribute("roomList", roomList);
+		roomService.registerARoom(room);
+		
+		
+		
+//		List<Room> roomList = roomService.searchForRooms(room, loginUser.getUserId());
+//		
+//		model.addAttribute("roomList", roomList);
+
+//		redirectAttributes.addFlashAttribute("roomList", roomList);
 		
 //		return getRoomList(model, roomList,  user, redirectAttributes);
 		return "actual/room/roomSearchResult";
