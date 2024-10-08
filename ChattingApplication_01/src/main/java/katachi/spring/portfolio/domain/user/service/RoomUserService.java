@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public interface RoomUserService {
 
-	public void registereUsers(ArrayList<Integer> userIds);
+	public void registerUsers(int roomId, ArrayList<Integer> userIds);
 	
 }

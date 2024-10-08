@@ -30,7 +30,7 @@
 			and	rooms.room_id = #{room.roomId}
 			or rooms.room_name = #{room.roomName}; 
 	</select>	
-	<insert id="insertOne">
+	<insert id="insertOne" useGeneratedKeys="true" keyProperty="roomId" keyColumn="room_id">
 		insert into rooms(
 			room_name,
 			deletion_flag,
@@ -38,7 +38,7 @@
 		)
 		values
 		(
-			#{roomName},
+			#{room.roomName},
 			0,
 			now()
 		)

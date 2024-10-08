@@ -14,5 +14,5 @@ public interface RoomMapper {
 	public List<Room> findRooms(@Param("room")Room room, @Param("userId")int userId);
 	
 	
-	public void insertOne(Room room);
+	public void insertOne(@Param("room")Room room);
 }

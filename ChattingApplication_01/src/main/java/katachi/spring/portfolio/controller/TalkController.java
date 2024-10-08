@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import katachi.spring.portfolio.domain.user.model.MUser;
 import katachi.spring.portfolio.domain.user.model.Room;
 import katachi.spring.portfolio.domain.user.service.RoomService;
+import katachi.spring.portfolio.domain.user.service.RoomUserService;
 import katachi.spring.portfolio.domain.user.service.UserService;
 import katachi.spring.portfolio.form.RoomCreationForm;
 import katachi.spring.portfolio.form.RoomSearchForm;
@@ -38,6 +39,9 @@ public class TalkController {
 	
 	@Autowired
 	private MessageController messageController;
+	
+	@Autowired
+	private RoomUserService roomUserService;
 	
 	@GetMapping("/roomList")
 	public String getRoomList(Model model, /** @ModelAttribute("roomList") List<Room> roomList, */ @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
@@ -158,7 +162,9 @@ public class TalkController {
 		}
 
 		roomService.registerARoom(room);
+		model.addAttribute("room", room);
 		
+		roomUserService.registerUsers(room.getRoomId(), userIds);
 		
 		
 //		List<Room> roomList = roomService.searchForRooms(room, loginUser.getUserId());

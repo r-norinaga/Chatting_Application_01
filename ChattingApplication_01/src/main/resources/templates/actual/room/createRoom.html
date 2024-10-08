@@ -8,6 +8,7 @@ layout:decorate="~{actual/layout/layout}">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 		<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+		<script th:src="@{/js/room/room.js}" defer></script>
 		<title th:text="#{talk.title.room.createRoom}"></title>
 	</head>
 	<body>
@@ -36,14 +37,87 @@ layout:decorate="~{actual/layout/layout}">
 						</th:block>
 						<th:block th:unless="${loginUser.userId == user.userId}">
 							<td>
-								<input type="checkbox" th:field="*{userIds}" th:value="${user.userId}"　th:text="${user.userName}"/>
+								
+								<input type="checkbox" th:field="*{userIds}" th:value="${user.userId}"/>
+								<label th:for="*{userIds}" th:text="${user.userName}"></label>
+<!--
+								<input type="hidden" id="userName" name="userName" th:value="${user.userName}" />
+-->
 							</td>							
 						</th:block>
 
 					</tr>				
 				</table>
+				<button type="button" class="btn btn-primary" th:text="#{user.btn.confirmation}" data-bs-toggle="modal" data-bs-target="#exampleModal">	
+				</button>
+<!--
 				<button class="btn btn-primary" type="submit">確認</button>	
+-->
+
+				<div class="modal fade modal-fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+					  <div class="modal-dialog modal-dialog-scrollable">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h4 class="modal-title" id="exampleModalLabel">入力内容の確認</h4>
+					        <button type="button" class="close" data-bs-dismiss="modal" aria-label="閉じる">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div>
+					          <h5 class="text-muted">下記の内容でトークルームを作成しますが、よろしいでしょうか？</h5>
+					        </div>
+					        <div>
+					          <h6 class="text-muted">入室ユーザー</h6>
+					          <p class="px-2" id="modalRoomName"></p>
+					        </div>
+					        <div>
+					          <h6 class="text-muted">入室ユーザー</h6>
+					          <p class="px-2" id="modalUserName"></p>
+					        </div>
+					      </div>
+					      <div class="modal-footer">
+							<button type="button" id="submit_button" class="btn btn-primary w-100 mt-3" >送信</button>  
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+					      </div><!-- /.modal-footer -->
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
 			</form>
+			<script defer>
+				$(function() {
+					$('#exampleModal').on('show.bs.modal', function () {
+						var roomName = $('#roomName').val()
+						let selectedUserNames = [];
+						let userIds = document.getElementsByName('userIds');
+						
+/**  						
+						let userNames = document.getElementsByName('userIds').element.text;
+*/						
+/** 						
+						let userNames = document.getElementsByName('userIds').innerText;
+*/						
+						for(let i = 0, len = userIds.length; i < len; i++){
+							let userId = userIds.item(i);
+/**
+							let userName = userNames.item(i);  
+*/
+							if(userId.checked){
+								selectedUserNames.push(userId.text);
+							}
+						}
+						
+						
+						
+						
+						
+						var userName = $('#userName').val()
+						var modal = $(this)
+						modal.find('#modalRoomName').text(roomName)
+						modal.find('#modalUserName').text(selectedUserNames)
+					})
+				})
+			</script>
 		</div>
 	</body>
 </html>
