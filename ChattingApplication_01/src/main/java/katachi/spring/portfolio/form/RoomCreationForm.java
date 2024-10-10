@@ -16,6 +16,10 @@ public class RoomCreationForm {
 	
 	private int[] userIds;
 	
+	private int logedinUserId;
+	
+	private String logedinUserName;
+	
 //	private List<RoomUser> roomUserList;
 //	
 //	private List<MUser> mUserList;

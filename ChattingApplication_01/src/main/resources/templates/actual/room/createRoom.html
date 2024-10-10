@@ -16,7 +16,9 @@ layout:decorate="~{actual/layout/layout}">
 			<h1>チャットアプリ</h1>
 			<h2>トークルーム作成</h2>
 			<form method="post" id="search-room-form" th:action="@{/talk/createARoom}" th:object="${roomCreationForm}">
-				<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
+				
+	
+				
 				<table class="table table-bordered" border="1">
 					<input type="hidden" th:field="*{roomId}"/>
 					<tr>
@@ -33,16 +35,13 @@ layout:decorate="~{actual/layout/layout}">
 					</tr>
 					<tr class="user" th:each="user:${userList}">
 						<th:block th:if="${loginUser.userId == user.userId}" >
-							<input type="hidden" name="userIds" th:value="${loginUser.userId}"/>
+							<input type="hidden" id="logedinUserId" name="logedinUserId" th:value="${loginUser.userId}"/>
+							<label th:text="|${loginUser.userName}|" for="logedinUserId" hidden >field</label>					
 						</th:block>
 						<th:block th:unless="${loginUser.userId == user.userId}">
 							<td>
-								
-								<input type="checkbox" th:field="*{userIds}" th:value="${user.userId}"/>
-								<label th:for="*{userIds}" th:text="${user.userName}"></label>
-<!--
-								<input type="hidden" id="userName" name="userName" th:value="${user.userName}" />
--->
+								<input type="checkbox" name="userIds" th:id="${#ids.seq('id_userID_')}" th:value="${user.userId}" />
+								<label th:text="|${user.userName}|" th:for="${#ids.prev('id_userID_')}">field</label>
 							</td>							
 						</th:block>
 
@@ -50,9 +49,7 @@ layout:decorate="~{actual/layout/layout}">
 				</table>
 				<button type="button" class="btn btn-primary" th:text="#{user.btn.confirmation}" data-bs-toggle="modal" data-bs-target="#exampleModal">	
 				</button>
-<!--
-				<button class="btn btn-primary" type="submit">確認</button>	
--->
+
 
 				<div class="modal fade modal-fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
 					  <div class="modal-dialog modal-dialog-scrollable">
@@ -68,12 +65,19 @@ layout:decorate="~{actual/layout/layout}">
 					          <h5 class="text-muted">下記の内容でトークルームを作成しますが、よろしいでしょうか？</h5>
 					        </div>
 					        <div>
-					          <h6 class="text-muted">入室ユーザー</h6>
+					          <h6 class="text-muted">ルーム名</h6>
 					          <p class="px-2" id="modalRoomName"></p>
 					        </div>
 					        <div>
 					          <h6 class="text-muted">入室ユーザー</h6>
+					          <ol id="list">
+								  
+							  </ol>
+							
+<!--
 					          <p class="px-2" id="modalUserName"></p>
+-->					        
+					        
 					        </div>
 					      </div>
 					      <div class="modal-footer">
@@ -88,33 +92,65 @@ layout:decorate="~{actual/layout/layout}">
 				$(function() {
 					$('#exampleModal').on('show.bs.modal', function () {
 						var roomName = $('#roomName').val()
-						let selectedUserNames = [];
-						let userIds = document.getElementsByName('userIds');
+
 						
-/**  						
-						let userNames = document.getElementsByName('userIds').element.text;
-*/						
-/** 						
-						let userNames = document.getElementsByName('userIds').innerText;
-*/						
+
+				
+						var userIds = [];
+						userIds = document.getElementsByName('userIds');
+						
+						let logedinUserId = $('#logedinUserId');
+						
+						var logedinUser = $('label[for=' + logedinUserId[0].getAttribute('id') + ']');
+
+
+						
+
+						let selectedUserNames = [];
+						
+						console.log('(あなた)' + logedinUser.text());
+						
+						selectedUserNames.push('(あなた)' + logedinUser.text());
+						
+						var todoList = document.createElement('li');
+						
+						
+						
+						todoList.textContent =  '(あなた)' + logedinUser.text();
+				
 						for(let i = 0, len = userIds.length; i < len; i++){
-							let userId = userIds.item(i);
-/**
-							let userName = userNames.item(i);  
-*/
+							let userId = userIds.item(i);  
+							
+							
+							
+
+							
 							if(userId.checked){
-								selectedUserNames.push(userId.text);
+								
+								var todoList = document.createElement('li');
+								var element = $('label[for=' + userId.getAttribute('id') + ']');
+								todoList.textContent = element.text();
+								document.getElementById('list').appendChild(todoList); 
+								
+/*
+								selectedUserNames.push(element.text());
+								console.log(element.text());
+*/
+								
 							}
 						}
-						
-						
-						
-						
+					
+
 						
 						var userName = $('#userName').val()
+
 						var modal = $(this)
+						
+						
+						
 						modal.find('#modalRoomName').text(roomName)
-						modal.find('#modalUserName').text(selectedUserNames)
+						modal.find('#modalUserName').text(selectedUserNames);
+
 					})
 				})
 			</script>
