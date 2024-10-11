@@ -1,5 +1,6 @@
 package katachi.spring.portfolio.rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,15 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import katachi.spring.portfolio.domain.user.model.Message;
-import katachi.spring.portfolio.domain.user.service.MessageService;
+import katachi.spring.portfolio.domain.user.model.Room;
+import katachi.spring.portfolio.domain.user.service.RoomService;
+import katachi.spring.portfolio.domain.user.service.RoomUserService;
 import katachi.spring.portfolio.domain.user.service.UserService;
-import katachi.spring.portfolio.form.MessageForm;
-
+import katachi.spring.portfolio.form.RoomCreationForm;
 
 @RestController
-@RequestMapping("/message")
-public class MessageRestController {
+@RequestMapping("/room")
+public class RoomRestController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
@@ -35,10 +36,13 @@ public class MessageRestController {
 	private UserService userService;
 	
 	@Autowired
-	private MessageService messageService;
+	private RoomService roomService;
 	
 	@Autowired
-	private MessageForm messageForm;
+	private RoomUserService roomUserService;
+	
+	@Autowired
+	private RoomCreationForm roomCreationForm;
 	
 	
 
@@ -46,11 +50,17 @@ public class MessageRestController {
 	 private MessageSource messageSource;
 	     
 	 /** ユーザーを登録 */
-	 @PostMapping("/postMessage/rest")
-	 public RestResult postMessage(Model model, @ModelAttribute @Validated MessageForm messageForm, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, Locale locale, RedirectAttributes redirectAttributes) {
+	 @PostMapping("/createARoom/rest")
+	 public RestResult postMessage(Model model, @ModelAttribute @Validated RoomCreationForm roomCreationForm, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, Locale locale, RedirectAttributes redirectAttributes) {
 	 	// 入力チェック結果
 		 
-		 System.out.println(messageForm.getContent());
+//		 System.out.println(roomCreationForm.getContent());
+		 
+		 final int[] userIds = roomCreationForm.getUserIds();
+		 
+		 if(userIds.length <= 0) {
+			 bindingResult.rejectValue("userIds", "NotChosen");
+		 }
 		 
 		 if (bindingResult.hasErrors()) {
 			 // チェック結果:NG
@@ -65,28 +75,20 @@ public class MessageRestController {
 			 return new RestResult(90, errors);
 		 }
 		 
-		 // formをMUserクラスに変換
-		 Message postedMessage = modelMapper.map(messageForm, Message.class);
-		 redirectAttributes.addFlashAttribute("roomId", postedMessage.getRoomId());
+		 Room room = modelMapper.map(roomCreationForm, Room.class);
+		 roomService.registerARoom(room);
+		 model.addAttribute("room", room); 
+		 
+		 final ArrayList<Integer> userIdList = new ArrayList<Integer>();
+		 for(int userId : userIds) {
+			 userIdList.add(userId);
+		 }
+		 redirectAttributes.addFlashAttribute("roomId", room.getRoomId());
 		 // ユーザー登録
-		 messageService.postMessage(postedMessage);
+		 roomUserService.registerRoomUsers(room.getRoomId(), userIdList);
 		
 		  
 		  // 結果の返却
 		 return new RestResult(0, null);
 	 }
-	
-//	@PutMapping("/postMessage")
-//	public String postMessage(Model model, @ModelAttribute MessageForm messageForm, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
-//		
-//		if(user != null) {
-//			model.addAttribute("loginUserName", user.getUsername());
-//		}
-//		
-//		redirectAttributes.addFlashAttribute("messageForm", messageForm);
-//		Message message = modelMapper.map(messageForm, Message.class);
-//		messageService.postMessage(message);
-//				
-//		return "0";
-//	}
 }

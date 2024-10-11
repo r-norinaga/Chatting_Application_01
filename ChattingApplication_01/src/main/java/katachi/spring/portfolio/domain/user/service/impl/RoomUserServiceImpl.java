@@ -15,7 +15,7 @@ public class RoomUserServiceImpl implements RoomUserService {
 	private RoomUserMapper roomUserMapper;
 	
 	@Override
-	public void registerUsers(int roomId, ArrayList<Integer> userIds) {
+	public void registerRoomUsers(int roomId, ArrayList<Integer> userIds) {
 	 roomUserMapper.multiRowInsert(roomId, userIds);	
 	}
 }

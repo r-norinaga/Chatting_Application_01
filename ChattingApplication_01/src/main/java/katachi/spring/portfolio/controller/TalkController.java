@@ -164,7 +164,7 @@ public class TalkController {
 		roomService.registerARoom(room);
 		model.addAttribute("room", room);
 		
-		roomUserService.registerUsers(room.getRoomId(), userIds);
+		roomUserService.registerRoomUsers(room.getRoomId(), userIds);
 		
 		
 //		List<Room> roomList = roomService.searchForRooms(room, loginUser.getUserId());

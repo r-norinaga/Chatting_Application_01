@@ -16,9 +16,6 @@ layout:decorate="~{actual/layout/layout}">
 			<h1>チャットアプリ</h1>
 			<h2>トークルーム作成</h2>
 			<form method="post" id="search-room-form" th:action="@{/talk/createARoom}" th:object="${roomCreationForm}">
-				
-	
-				
 				<table class="table table-bordered" border="1">
 					<input type="hidden" th:field="*{roomId}"/>
 					<tr>
@@ -44,13 +41,10 @@ layout:decorate="~{actual/layout/layout}">
 								<label th:text="|${user.userName}|" th:for="${#ids.prev('id_userID_')}">field</label>
 							</td>							
 						</th:block>
-
 					</tr>				
 				</table>
 				<button type="button" class="btn btn-primary" th:text="#{user.btn.confirmation}" data-bs-toggle="modal" data-bs-target="#exampleModal">	
 				</button>
-
-
 				<div class="modal fade modal-fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
 					  <div class="modal-dialog modal-dialog-scrollable">
 					    <div class="modal-content">
@@ -72,16 +66,14 @@ layout:decorate="~{actual/layout/layout}">
 					          <h6 class="text-muted">入室ユーザー</h6>
 					          <ol id="list">
 								  
-							  </ol>
-							
+							  </ol>						
 <!--
 					          <p class="px-2" id="modalUserName"></p>
 -->					        
-					        
 					        </div>
 					      </div>
 					      <div class="modal-footer">
-							<button type="button" id="submit_button" class="btn btn-primary w-100 mt-3" >送信</button>  
+							<button type="button" id="submit_button" class="btn btn-primary w-100 mt-3" >作成決定</button>  
 					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
 					      </div><!-- /.modal-footer -->
 					    </div><!-- /.modal-content -->
@@ -92,65 +84,45 @@ layout:decorate="~{actual/layout/layout}">
 				$(function() {
 					$('#exampleModal').on('show.bs.modal', function () {
 						var roomName = $('#roomName').val()
-
-						
-
-				
 						var userIds = [];
 						userIds = document.getElementsByName('userIds');
-						
 						let logedinUserId = $('#logedinUserId');
-						
 						var logedinUser = $('label[for=' + logedinUserId[0].getAttribute('id') + ']');
-
-
-						
-
+/*								
 						let selectedUserNames = [];
-						
-						console.log('(あなた)' + logedinUser.text());
-						
 						selectedUserNames.push('(あなた)' + logedinUser.text());
-						
-						var todoList = document.createElement('li');
-						
-						
-						
-						todoList.textContent =  '(あなた)' + logedinUser.text();
-				
+*/
+						let list_element = document.getElementById('list');			
+						if(list_element.childElementCount > 0){
+							//[li]の数を取得する
+							const len = list_element.children.length ;
+							//[li]の数だけ繰り返す
+						 	for ( var i = 0 ; i < len ; i ++ ) {
+								//[li]を削除する
+						  		list_element.removeChild ( list_element.children [0] ) ;
+							}
+						}	
+						var ListElementLogedinUser = document.createElement('li');						
+						ListElementLogedinUser.textContent =  '(あなた)' + logedinUser.text();
+						document.getElementById('list').appendChild(ListElementLogedinUser); 
 						for(let i = 0, len = userIds.length; i < len; i++){
 							let userId = userIds.item(i);  
-							
-							
-							
-
-							
-							if(userId.checked){
-								
-								var todoList = document.createElement('li');
+							if(userId.checked){								
+								var userList = document.createElement('li');
 								var element = $('label[for=' + userId.getAttribute('id') + ']');
-								todoList.textContent = element.text();
-								document.getElementById('list').appendChild(todoList); 
-								
+								userList.textContent = element.text();
+								document.getElementById('list').appendChild(userList); 								
 /*
 								selectedUserNames.push(element.text());
-								console.log(element.text());
 */
-								
 							}
-						}
-					
-
-						
+						}						
 						var userName = $('#userName').val()
-
-						var modal = $(this)
-						
-						
-						
+						var modal = $(this)												
 						modal.find('#modalRoomName').text(roomName)
+/*						
 						modal.find('#modalUserName').text(selectedUserNames);
-
+*/
 					})
 				})
 			</script>

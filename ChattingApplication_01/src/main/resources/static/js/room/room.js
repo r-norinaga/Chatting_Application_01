@@ -7,11 +7,11 @@ jQuery(function($){
     /** 登録ボタンを押したときの処理. */
     $('#submit_button').click(function(event) {
         // ユーザー登録
-        postMessage();
+        createARoom();
     });
  });
  /** ユーザー登録処理 */
- function postMessage() {
+ function createARoom() {
     // バリデーション結果をクリア
     removeValidResult();
     // フォームの値を取得
@@ -25,7 +25,7 @@ jQuery(function($){
     $.ajax({
         type : "POST",
         cache : false,
-        url : '/message/postMessage/rest',
+        url : '/room/createARoom/rest',
         data: formData,
         dataType : 'json',
     }).done(function(data){
