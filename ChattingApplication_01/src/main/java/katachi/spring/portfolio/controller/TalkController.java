@@ -1,6 +1,5 @@
 package katachi.spring.portfolio.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -144,6 +143,7 @@ public class TalkController {
 
 	}
 	
+/*
 	@PostMapping("/createARoom")
 	public String postCreateARoom(Model model, @ModelAttribute RoomCreationForm roomCreationForm, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 
@@ -176,7 +176,7 @@ public class TalkController {
 //		return getRoomList(model, roomList,  user, redirectAttributes);
 		return "actual/room/roomSearchResult";
 	}
-	
+*/
 	
 	
 }

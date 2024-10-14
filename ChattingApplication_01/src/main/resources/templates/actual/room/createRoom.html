@@ -29,6 +29,9 @@ layout:decorate="~{actual/layout/layout}">
 					</tr>
 					<tr>
 						<td><h3>追加ユーザー選択</h3></td>
+						<td>
+							<p class="userIds"></p>
+						</td>
 					</tr>
 					<tr class="user" th:each="user:${userList}">
 						<th:block th:if="${loginUser.userId == user.userId}" >
@@ -65,11 +68,7 @@ layout:decorate="~{actual/layout/layout}">
 					        <div>
 					          <h6 class="text-muted">入室ユーザー</h6>
 					          <ol id="list">
-								  
 							  </ol>						
-<!--
-					          <p class="px-2" id="modalUserName"></p>
--->					        
 					        </div>
 					      </div>
 					      <div class="modal-footer">
@@ -85,14 +84,19 @@ layout:decorate="~{actual/layout/layout}">
 					$('#exampleModal').on('show.bs.modal', function () {
 						var roomName = $('#roomName').val()
 						var userIds = [];
-						userIds = document.getElementsByName('userIds');
+						userIds = $('input[name="userIds"]:checked');
+						console.log(userIds);
+
+/*
+							userIds = document.getElementsByName('userIds');
+							$('input[name="userIds"]:checked').each(function(){
+							// チェックされているの値を配列に格納
+							userIds.push($(this).val());
+						});
+*/
 						let logedinUserId = $('#logedinUserId');
 						var logedinUser = $('label[for=' + logedinUserId[0].getAttribute('id') + ']');
-/*								
-						let selectedUserNames = [];
-						selectedUserNames.push('(あなた)' + logedinUser.text());
-*/
-						let list_element = document.getElementById('list');			
+						let list_element = document.getElementById('list');
 						if(list_element.childElementCount > 0){
 							//[li]の数を取得する
 							const len = list_element.children.length ;
@@ -104,25 +108,23 @@ layout:decorate="~{actual/layout/layout}">
 						}	
 						var ListElementLogedinUser = document.createElement('li');						
 						ListElementLogedinUser.textContent =  '(あなた)' + logedinUser.text();
-						document.getElementById('list').appendChild(ListElementLogedinUser); 
-						for(let i = 0, len = userIds.length; i < len; i++){
-							let userId = userIds.item(i);  
-							if(userId.checked){								
+						document.getElementById('list').appendChild(ListElementLogedinUser);
+						
+						
+						$('input[name="userIds"]:checked').each(function(index, element){
 								var userList = document.createElement('li');
-								var element = $('label[for=' + userId.getAttribute('id') + ']');
+								var element = $('label[for=' + $(element).attr('id') + ']');
 								userList.textContent = element.text();
-								document.getElementById('list').appendChild(userList); 								
-/*
-								selectedUserNames.push(element.text());
-*/
-							}
-						}						
+								$("#list").append(userList); 
+							/*	
+								document.getElementById('list').appendChild(userList); 
+							*/
+						});
 						var userName = $('#userName').val()
 						var modal = $(this)												
 						modal.find('#modalRoomName').text(roomName)
-/*						
-						modal.find('#modalUserName').text(selectedUserNames);
-*/
+						
+			
 					})
 				})
 			</script>

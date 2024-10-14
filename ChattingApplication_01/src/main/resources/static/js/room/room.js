@@ -16,7 +16,7 @@ jQuery(function($){
     removeValidResult();
     // フォームの値を取得
     
-	var formData = $('#message-form').serializeArray();
+	var formData = $('#search-room-form').serializeArray();
 	
 	console.log(formData);
 	
@@ -38,13 +38,14 @@ jQuery(function($){
 				reflectValidResult(key, value)
 			});
 		}else if(data.result === 0){
-			alert('メッセージを投稿しました');
+			alert('トークルームを作成しました');
 			// ログイン画面にリダイレクト
 //			window.location.href = '/message/messageList';
 		}
     }).fail(function(jqXHR, textStatus, errorThrown){
+		console.log(jqXHR);
 		// ajax失敗時の処理
-		alert('メッセージの投稿に失敗しました。');
+		alert('トークルームの作成に失敗しました。');
 	}).always(function() {
  		// 常に実行する処理
 	});
@@ -60,12 +61,27 @@ jQuery(function($){
  function reflectValidResult(key, value) {
  // エラーメッセージ追加
  // CSS適用
-		$('textarea[id=' + key + ']').addClass('is-invalid');
+ 
+ 	if(key == 'userIds'){
+		$('p[class=' + key + ']').addClass('is-invalid');
+		$('p.' + key).after('<div class="invalid-feedback">' + value + '</div>');
 		// エラーメッセージ追加
-		$('textarea[id=' + key + ']').after('<div class="invalid-feedback">' + value + '</div>');
-		
-		$('p[id="modalContent"]').addClass('is-invalid');
+/*
+		$('h3.'+key).after('<div class="invalid-feedback">' + value + '</div>');
+		$('input[name=' + key + ']').addClass('is-invalid');
 		// エラーメッセージ追加
-//		$('p[id="modalContent"]').after('<div class="invalid-feedback" th:text="{'+ key + 'は' +  value + '}" >' + '</div>');
-		$('p[id="modalContent"]').after('<div class="invalid-feedback">'+ value + '</div>'); 
+		$('input[name=' + key + ']').after('<div class="invalid-feedback">' + value + '</div>');
+*/
+		$('ol[id="list"]').addClass('is-invalid');
+		// エラーメッセージ追加
+		$('ol[id="list"]').after('<div class="invalid-feedback">'+ value + '</div>'); 
+	 }else {
+		$('input[id=' + key + ']').addClass('is-invalid');
+		// エラーメッセージ追加
+		$('input[id=' + key + ']').after('<div class="invalid-feedback">' + value + '</div>');
+		$('p[id="modalRoomName"]').addClass('is-invalid');
+		// エラーメッセージ追加
+		$('p[id="modalRoomName"]').after('<div class="invalid-feedback">'+ value + '</div>'); 
+	 }
+
 }

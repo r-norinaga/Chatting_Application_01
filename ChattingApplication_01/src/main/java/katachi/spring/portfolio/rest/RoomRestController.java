@@ -41,8 +41,8 @@ public class RoomRestController {
 	@Autowired
 	private RoomUserService roomUserService;
 	
-	@Autowired
-	private RoomCreationForm roomCreationForm;
+//	@Autowired
+//	private RoomCreationForm roomCreationForm;
 	
 	
 
@@ -58,7 +58,7 @@ public class RoomRestController {
 		 
 		 final int[] userIds = roomCreationForm.getUserIds();
 		 
-		 if(userIds.length <= 0) {
+		 if(userIds == null) {
 			 bindingResult.rejectValue("userIds", "NotChosen");
 		 }
 		 
@@ -80,6 +80,8 @@ public class RoomRestController {
 		 model.addAttribute("room", room); 
 		 
 		 final ArrayList<Integer> userIdList = new ArrayList<Integer>();
+		 userIdList.add(roomCreationForm.getLogedinUserId());	 
+		 
 		 for(int userId : userIds) {
 			 userIdList.add(userId);
 		 }

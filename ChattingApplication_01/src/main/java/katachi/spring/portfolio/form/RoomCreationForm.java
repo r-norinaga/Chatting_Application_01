@@ -3,6 +3,7 @@ package katachi.spring.portfolio.form;
 import org.springframework.stereotype.Component;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
@@ -14,6 +15,7 @@ public class RoomCreationForm {
 	@NotBlank
 	private String roomName; 
 	
+	@NotEmpty
 	private int[] userIds;
 	
 	private int logedinUserId;
