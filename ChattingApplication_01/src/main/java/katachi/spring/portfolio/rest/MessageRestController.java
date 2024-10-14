@@ -52,6 +52,13 @@ public class MessageRestController {
 		 
 		 System.out.println(messageForm.getContent());
 		 
+		 String spacedMessageContent = messageForm.getContent().replace(" ", "");
+		 spacedMessageContent = spacedMessageContent.replace("　", "");
+		 
+		 if(spacedMessageContent.equals("")) {
+			 bindingResult.rejectValue("content", "space");
+		 }
+		 
 		 if (bindingResult.hasErrors()) {
 			 // チェック結果:NG
 			 Map<String, String> errors = new HashMap<>();

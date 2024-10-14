@@ -56,6 +56,14 @@ public class RoomRestController {
 		 
 //		 System.out.println(roomCreationForm.getContent());
 		 
+		 String spacedRoomName = roomCreationForm.getRoomName().replace(" ", "");
+		 spacedRoomName = spacedRoomName.replace("　", "");
+		 
+		 if(spacedRoomName.equals("")) {
+			 bindingResult.rejectValue("roomName", "space");
+		 }
+		 
+		 
 		 final int[] userIds = roomCreationForm.getUserIds();
 		 
 		 if(userIds == null) {
