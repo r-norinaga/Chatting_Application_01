@@ -63,14 +63,14 @@ jQuery(function($){
  // CSS適用
  
  	if(key == 'userIds'){
+		// エラーメッセージ追加
 		$('p[class=' + key + ']').addClass('is-invalid');
 		$('p.' + key).after('<div class="invalid-feedback">' + value + '</div>');
-		// エラーメッセージ追加
+
 /*
-		$('h3.'+key).after('<div class="invalid-feedback">' + value + '</div>');
 		$('input[name=' + key + ']').addClass('is-invalid');
-		// エラーメッセージ追加
 		$('input[name=' + key + ']').after('<div class="invalid-feedback">' + value + '</div>');
+		$('h3.'+key).after('<div class="invalid-feedback">' + value + '</div>');
 */
 		$('ol[id="list"]').addClass('is-invalid');
 		// エラーメッセージ追加
