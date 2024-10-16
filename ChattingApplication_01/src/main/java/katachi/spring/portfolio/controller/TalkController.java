@@ -75,17 +75,18 @@ public class TalkController {
 	}
 	
 	@PostMapping("/roomList")
-	public String postRoomList(Model model, @RequestParam("roomId")int roomId, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+	public String postRoomList(Model model, @RequestParam("roomId")int roomId, @RequestParam("roomName")String roomName, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 
 		if(user != null) {
 			model.addAttribute("loginUserName", user.getUsername());
 		}
 
 		redirectAttributes.addFlashAttribute("roomId", roomId);
+		redirectAttributes.addFlashAttribute("roomName", roomName);
 		
 //		return "redirect:/message/messageList";
 
-		return messageController.getMessageList(model, roomId, user, redirectAttributes);
+		return messageController.getMessageList(model, roomId, roomName, user, redirectAttributes);
 	}
 	
 	@GetMapping("/searchForARoom")

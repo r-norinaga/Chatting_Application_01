@@ -35,7 +35,7 @@ public class MessageController {
 	private MessageForm messageForm;
 	
 	@GetMapping("/messageList")
-	public String getMessageList(Model model, @ModelAttribute("roomId")int roomId, /** @ModelAttribute MessageForm messageForm, */ @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+	public String getMessageList(Model model, @ModelAttribute("roomId")int roomId, @ModelAttribute("roomName")String roomName, /** @ModelAttribute MessageForm messageForm, */ @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 		
 		if(user != null) {
 			model.addAttribute("loginUserName", user.getUsername());
@@ -52,6 +52,7 @@ public class MessageController {
 		model.addAttribute("messageList", messageList);
 		model.addAttribute("messageForm", messageForm);
 		model.addAttribute("roomId", roomId);
+		model.addAttribute("roomName", roomName);
 		
 		return "actual/message/messageList";
 	}
