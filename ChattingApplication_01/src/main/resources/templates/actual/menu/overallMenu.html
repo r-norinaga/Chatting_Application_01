@@ -12,9 +12,11 @@ layout:decorate="~{actual/layout/layout}">
 		<div layout:fragment="content">
 			<h1>チャットアプリ</h1>
 			<h2>総合メニュー</h2>
-			<a th:href="@{'/menu/talkMenu'}">トークメニュー</a><br>
 			
-			<a th:href="@{'/menu/userMenu'}">アカウントメニュー</a>
+			<a class="btn btn-primary" th:href="@{'/menu/talkMenu'}">トークメニュー</a><br>
+			
+			<a class="btn btn-primary" th:href="@{'/menu/userMenu'}">アカウントメニュー</a>
+			
 		</div>
 	</body>
 </html>

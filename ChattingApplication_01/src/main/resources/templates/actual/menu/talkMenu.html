@@ -11,13 +11,14 @@ layout:decorate="~{actual/layout/layout}">
 		<div layout:fragment="content">
 			<h1>チャットアプリ</h1>
 			<h2>トークメニュー</h2>
-			<a th:href="@{'/talk/roomList'}">トークルーム一覧</a>
+
+			<a class="btn btn-primary" th:href="@{'/talk/roomList'}">トークルーム一覧</a>
 			<br>
 			
-			<a th:href="@{'/talk/createARoom'}">トークルーム作成</a>
+			<a class="btn btn-primary" th:href="@{'/talk/createARoom'}">トークルーム作成</a>
 			<br>
 			
-			<a th:href="@{'/talk/searchForARoom'}">トークルーム検索</a>
+			<a class="btn btn-primary" th:href="@{'/talk/searchForARoom'}">トークルーム検索</a>
 			
 		</div>
 	</body>

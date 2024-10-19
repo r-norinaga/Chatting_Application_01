@@ -4,7 +4,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{actual/layout/layout}">
 	<head>
 		<meta charset="UTF-8">
-		<title>Title page</title>
+		<title>タイトル</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	</head>
@@ -12,9 +12,9 @@ layout:decorate="~{actual/layout/layout}">
 		<div layout:fragment="content">
 			<h1>チャットアプリ</h1>
 			<p>↓メニュー</p>
-			<a th:href="@{'/signup/signup'}">アカウント登録</a><br>
+			<a class="btn btn-primary" th:href="@{'/signup/signup'}">アカウント登録</a><br>
 			
-			<a th:href="@{'/login'}">ログイン</a>
+			<a class="btn btn-primary" th:href="@{'/login'}">ログイン</a>
 		</div>
 	
 	</body>

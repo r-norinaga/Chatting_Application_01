@@ -86,9 +86,7 @@ layout:decorate="~{actual/layout/layout}">
 						var userIds = [];
 						userIds = $('input[name="userIds"]:checked');
 						console.log(userIds);
-
-/*
-							userIds = document.getElementsByName('userIds');
+/*						userIds = document.getElementsByName('userIds');
 							$('input[name="userIds"]:checked').each(function(){
 							// チェックされているの値を配列に格納
 							userIds.push($(this).val());
@@ -109,8 +107,6 @@ layout:decorate="~{actual/layout/layout}">
 						var ListElementLogedinUser = document.createElement('li');						
 						ListElementLogedinUser.textContent =  '(あなた)' + logedinUser.text();
 						document.getElementById('list').appendChild(ListElementLogedinUser);
-						
-						
 						$('input[name="userIds"]:checked').each(function(index, element){
 								var userList = document.createElement('li');
 								var element = $('label[for=' + $(element).attr('id') + ']');
@@ -123,8 +119,6 @@ layout:decorate="~{actual/layout/layout}">
 						var userName = $('#userName').val()
 						var modal = $(this)												
 						modal.find('#modalRoomName').text(roomName)
-						
-			
 					})
 				})
 			</script>
