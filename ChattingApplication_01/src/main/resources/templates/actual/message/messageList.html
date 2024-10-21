@@ -16,11 +16,9 @@ layout:decorate="~{actual/layout/layout}">
 		<div layout:fragment="content">
 			<h1>チャットアプリ</h1>
 			<h2>トークルーム内</h2>
-			
 <!--
 			<div>
 -->
-
 				<table border="2" class="table table-bordered" style="width:650px;">
 					<thead>
 						<tr>
@@ -77,11 +75,9 @@ layout:decorate="~{actual/layout/layout}">
 						</td>
 					</tbody>
 				</table>
-				
 <!--
 			</div>
--->	
-
+-->
 			<!--/①LINE会話終了-->
 <!--
 			<div class="posting-area">
@@ -90,24 +86,24 @@ layout:decorate="~{actual/layout/layout}">
 					<table border="2" class="table table-bordered" style="width:650px;">
 						<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
 						<input type="hidden" id="roomId" name="roomId" th:value="${roomId}"/>
-							<thead>
-								<th style="text-align:left;">新規投稿メッセージ入力欄</th>
-							</thead>
-							<tbody>
-								<tr>
-									<div>
-										<td style="width:500px;">
-											<div class="form-group" >
-												<textarea th:field="*{content}" class="form-control" style="overflow:scroll; width:500px;"></textarea>
-											</div>
-										</td>
-										<td>
-											<button type="button" class="btn btn-primary" th:text="#{user.btn.confirmation}" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width:75px; text-align:center;">	
-											</button>
-										</td>
-									</div>
-								</tr>
-							</tbody>
+						<thead>
+							<th style="text-align:left;">新規投稿メッセージ入力欄</th>
+						</thead>
+						<tbody>
+							<tr>
+								<div>
+									<td style="width:500px;">
+										<div class="form-group" >
+											<textarea th:field="*{content}" class="form-control" style="overflow:scroll; width:500px;"></textarea>
+										</div>
+									</td>
+									<td>
+										<button type="button" class="btn btn-primary" th:text="#{user.btn.confirmation}" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width:75px; text-align:center;">	
+										</button>
+									</td>
+								</div>
+							</tr>
+						</tbody>
 					</table>
 					<!-- モーダルの設定 -->
 					<div class="modal fade modal-fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
