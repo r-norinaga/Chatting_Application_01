@@ -50,6 +50,7 @@ public class TalkController {
 		}
 		
 		MUser loginUser = userService.getLoginUser(user.getUsername());
+		model.addAttribute("loginUser", loginUser);
 		
 		List<Room> roomList = roomService.getRoomList(loginUser.getUserId());
 		model.addAttribute("roomList", roomList);

@@ -12,4 +12,6 @@ public interface RoomUserMapper {
 	@Options(useGeneratedKeys=true, keyColumn="room_user_id")
 	public void multiRowInsert(@Param("roomId")int roomId, @Param("userIds")ArrayList<Integer> userIds);
 	
+	public void deletOne(int roomId, int userId);
+	
 }

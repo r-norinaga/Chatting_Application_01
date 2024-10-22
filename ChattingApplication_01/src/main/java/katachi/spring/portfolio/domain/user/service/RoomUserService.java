@@ -6,4 +6,6 @@ public interface RoomUserService {
 
 	public void registerRoomUsers(int roomId, ArrayList<Integer> userIds);
 	
+	public void leaveARoom (int roomId, int userId);
+	
 }

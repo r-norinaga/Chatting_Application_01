@@ -17,9 +17,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import katachi.spring.portfolio.domain.user.model.MUser;
 import katachi.spring.portfolio.domain.user.model.Room;
 import katachi.spring.portfolio.domain.user.service.RoomService;
 import katachi.spring.portfolio.domain.user.service.RoomUserService;
@@ -51,7 +53,7 @@ public class RoomRestController {
 	     
 	 /** ユーザーを登録 */
 	 @PostMapping("/createARoom/rest")
-	 public RestResult postMessage(Model model, @ModelAttribute @Validated RoomCreationForm roomCreationForm, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, Locale locale, RedirectAttributes redirectAttributes) {
+	 public RestResult postCreateARoom(Model model, @ModelAttribute @Validated RoomCreationForm roomCreationForm, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, Locale locale, RedirectAttributes redirectAttributes) {
 	 	// 入力チェック結果
 		 
 //		 System.out.println(roomCreationForm.getContent());
@@ -98,6 +100,29 @@ public class RoomRestController {
 		 roomUserService.registerRoomUsers(room.getRoomId(), userIdList);
 		
 		  
+		  // 結果の返却
+		 return new RestResult(0, null);
+	 }
+	 
+	 /** ユーザーを登録 */
+	 @PostMapping("/leaveARoom/rest")
+	 public RestResult postLeaveARoom(Model model, @RequestParam("roomId")int roomId, @ModelAttribute MUser loginUser, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, Locale locale, RedirectAttributes redirectAttributes) {
+	 	// 入力チェック結果
+		 if (bindingResult.hasErrors()) {
+			 // チェック結果:NG
+			 Map<String, String> errors = new HashMap<>();
+			 // エラーメッセージ取得
+		             
+			 for(FieldError error : bindingResult.getFieldErrors()) {
+				 String message = messageSource.getMessage(error, locale);
+				 errors.put(error.getField(), message);
+			 }
+	// エラー結果の返却
+			 return new RestResult(90, errors);
+		 }
+		 roomUserService.leaveARoom(roomId, loginUser.getUserId());
+		 
+		 
 		  // 結果の返却
 		 return new RestResult(0, null);
 	 }

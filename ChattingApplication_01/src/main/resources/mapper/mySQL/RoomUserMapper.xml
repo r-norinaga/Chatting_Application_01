@@ -3,6 +3,16 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="katachi.spring.portfolio.repository.RoomUserMapper">
+	
+	<resultMap type="katachi.spring.portfolio.domain.user.model.RoomUser" id="RoomUser">
+		<id column="room_user_id" property="roomUserId"/>
+		<result column="room_id" property="roomId"/>
+		<result column="current_user_id" property="currentUserId"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="deleted_at" property="deletedAt"/>
+		<result column="deletion_flag" property="deletionFlag"/>
+	</resultMap>
+	
 	<insert id="multiRowInsert">
 		insert into room_users(
 			room_id,
@@ -15,5 +25,16 @@
       		(#{roomId}, #{userId}, 0, now())
     	</foreach>
 	</insert>
-
+	
+	<update id="deletOne">
+		update users
+			set
+				deletion_flag = "1"
+				deleted_at = now()
+			where
+					room_id = #{roomId} and user_id = #{userId} and deletion_flag = 0
+	</update>
+	
+	
+	
 </mapper>

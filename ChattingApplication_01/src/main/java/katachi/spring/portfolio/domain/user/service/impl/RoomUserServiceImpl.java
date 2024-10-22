@@ -18,4 +18,12 @@ public class RoomUserServiceImpl implements RoomUserService {
 	public void registerRoomUsers(int roomId, ArrayList<Integer> userIds) {
 	 roomUserMapper.multiRowInsert(roomId, userIds);	
 	}
+	
+	@Override
+	public void leaveARoom (int roomId, int userId) {
+		roomUserMapper.deletOne(roomId, userId);
+	}
+	
+	
+	
 }

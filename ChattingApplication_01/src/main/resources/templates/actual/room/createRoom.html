@@ -15,7 +15,7 @@ layout:decorate="~{actual/layout/layout}">
 		<div layout:fragment="content">
 			<h1>チャットアプリ</h1>
 			<h2>トークルーム作成</h2>
-			<form method="post" id="search-room-form" th:action="@{/talk/createARoom}" th:object="${roomCreationForm}">
+			<form method="post" id="create-room-form" th:action="@{/talk/createARoom}" th:object="${roomCreationForm}">
 				<table class="table table-bordered" border="1">
 					<input type="hidden" th:field="*{roomId}"/>
 					<tr>

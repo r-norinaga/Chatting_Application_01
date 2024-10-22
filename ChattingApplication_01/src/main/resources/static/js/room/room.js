@@ -16,7 +16,7 @@ jQuery(function($){
     removeValidResult();
     // フォームの値を取得
     
-	var formData = $('#search-room-form').serializeArray();
+	var formData = $('#create-room-form').serializeArray();
 	
 	console.log(formData);
 	
