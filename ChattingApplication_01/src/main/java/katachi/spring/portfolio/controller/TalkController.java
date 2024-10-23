@@ -90,7 +90,7 @@ public class TalkController {
 //		return messageController.getMessageList(model, roomId, roomName, user, redirectAttributes);
 //	}
 	
-	@PostMapping("/roomList")
+	@PostMapping(value="/roomList", params="viewing")
 	public String postRoomListViewingTheRoom(Model model, @RequestParam("roomId")int roomId, @RequestParam("roomName")String roomName, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 
 		if(user != null) {
@@ -99,6 +99,8 @@ public class TalkController {
 
 		redirectAttributes.addFlashAttribute("roomId", roomId);
 		redirectAttributes.addFlashAttribute("roomName", roomName);
+		model.addAttribute("roomId", roomId);
+		model.addAttribute("roomName", roomName);
 
 		return messageController.getMessageList(model, roomId, roomName, user, redirectAttributes);
 	}

@@ -27,9 +27,9 @@
 	</insert>
 	
 	<update id="deletOne">
-		update users
+		update room_users
 			set
-				deletion_flag = "1"
+				deletion_flag = 1,
 				deleted_at = now()
 			where
 					room_id = #{roomId} and user_id = #{userId} and deletion_flag = 0

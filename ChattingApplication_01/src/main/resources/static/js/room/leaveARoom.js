@@ -4,49 +4,63 @@
 'use strict'
 
 jQuery(function($){
-    /** 登録ボタンを押したときの処理. */
-    $('#submit_button').click(function(event) {
-        // ユーザー登録
-        leaveARoom();
-    });
- });
- /** ユーザー登録処理 */
- function leaveARoom() {
-    // バリデーション結果をクリア
-    removeValidResult();
-    // フォームの値を取得
-    
+	/** 更新ボタンを押したときの処理 */
+	$('#submit_button').click(function(event){
+		//ユーザー更新
+		updateRoomUser();
+	});	
+});
 
-	var formData = $('#leave-room-form').serializeArray();
+
+/** ユーザー更新処理 */
+function updateRoomUser(){
+	
+	let modalRoomId = $('p[id="modalRoomId"]');
+	
+	
+	
+	console.log(modalRoomId.text());
+	
+	var formData = $('#leave-room-form' + modalRoomId.text()).serializeArray();
+	
 	console.log(formData);
+/*
+	$('p[id="modalRoomId"]').text();
+*/
+	
 
 	
-    // ajax通信
-    $.ajax({
-        type : "POST",
-        cache : false,
-        url : '/room/leaveARoom/rest',
-        data: formData,
-        dataType : 'json',
-    }).done(function(data){
-        // ajax成功時の処理
-        console.log(data);
-        
-		if(data.result === 90) {
-			// validationエラー時の処理
-			$.each(data.errors, function(key, value) {
-				reflectValidResult(key, value)
-			});
-		}else if(data.result === 0){
-			alert('トークルームを作成しました');
-			// ログイン画面にリダイレクト
-//			window.location.href = '/message/messageList';
-		}
-    }).fail(function(jqXHR, textStatus, errorThrown){
-		console.log(jqXHR);
-		// ajax失敗時の処理
-		alert('トークルームの作成に失敗しました。');
-	}).always(function() {
- 		// 常に実行する処理
+	
+	
+	
+	
+	
+/*
+	formData.text("roomId",$('#modalRoomId').val);
+	let roomId = formData.getElementById('roomId');
+*/
+	
+	
+	$.ajax({
+		type:"PUT",
+		cache:false,
+		url:'/room/leaveARoom',
+		data:formData,
+		dataType:'json',
+	}).done(function(data){
+		
+		
+		alert('トークルームから退出しました。');
+		
+		window.location.href='/talk/roomList';
+				
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		alert('トークルームからの退出に失敗しました。');
+	}).always(function(){
+		
 	});
- }
+	
+	
+	
+	
+}
