@@ -24,4 +24,9 @@ public class MessageServiceImpl implements MessageService {
 	public void postMessage(Message message) {
 		messageMapper.insertOne(message);
 	}
+
+	@Override
+	public void deleteMyMessage(int deletedMessageId, int userId) {
+		messageMapper.deleteOne(deletedMessageId, userId);
+	}
 }

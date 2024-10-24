@@ -86,3 +86,44 @@ jQuery(function($){
 	
 
  }
+ 
+ jQuery(function($){
+	/** 更新ボタンを押したときの処理 */
+	$('#submit_button_message_deletion').click(function(event){
+		//ユーザー更新
+		deleteMyMessage();
+	});	
+});
+
+
+/** 処理 */
+function deleteMyMessage(){
+	
+	
+	var formData = $('#delete-my-message-form').serializeArray();
+	
+
+	
+	$.ajax({
+		type:"PUT",
+		cache:false,
+		url:'/message/deleteMyMessage',
+		data:formData,
+		dataType:'json',
+	}).done(function(data){
+		
+		
+		alert('メッセージを削除しました。');
+		
+		window.location.href='/message/messageList';
+				
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		alert('メッセージの削除に失敗しました。');
+	}).always(function(){
+		
+	});
+	
+	
+	
+	
+}

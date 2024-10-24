@@ -10,4 +10,5 @@ import katachi.spring.portfolio.domain.user.model.Message;
 public interface MessageMapper {
 	public List<Message> findMany(int roomId);
 	public void insertOne(Message message);
+	public void deleteOne(int messageId, int userId);
 }

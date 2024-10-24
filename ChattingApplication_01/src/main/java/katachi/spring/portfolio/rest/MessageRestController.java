@@ -15,15 +15,17 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import katachi.spring.portfolio.domain.user.model.MUser;
 import katachi.spring.portfolio.domain.user.model.Message;
 import katachi.spring.portfolio.domain.user.service.MessageService;
 import katachi.spring.portfolio.domain.user.service.UserService;
 import katachi.spring.portfolio.form.MessageForm;
-
 
 @RestController
 @RequestMapping("/message")
@@ -81,6 +83,22 @@ public class MessageRestController {
 		  
 		  // 結果の返却
 		 return new RestResult(0, null);
+	 }
+	 
+	 @PutMapping("/deleteMyMessage")
+	 public String deleteMyMessage(Model model, @RequestParam("deletedMessageId")int deletedMessageId, @ModelAttribute MUser loginUser, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+		 
+		 if(user != null) {
+				model.addAttribute("loginUserName", user.getUsername());
+			}
+			
+			
+			
+			model.addAttribute("loginUser", loginUser);
+		 
+			messageService.deleteMyMessage(deletedMessageId, loginUser.getUserId());
+		  // 結果の返却
+		 return "0";
 	 }
 	
 //	@PutMapping("/postMessage")

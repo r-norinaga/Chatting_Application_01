@@ -31,19 +31,22 @@ layout:decorate="~{actual/layout/layout}">
 								<div th:each="message:${messageList}">
 									<th:block th:if="${message.userId == loginUser.userId}">
 										<!--③右コメント始-->
-										<div class="outer-part-of-my-comment">
-											<div class="chatting">
-												<div>
-													<div class="mycomment">
-											  			<p th:text="${message.content}"></p>
-													</div>
-													<br>
-													<div class="created_at">
-														<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+											<div class="outer-part-of-my-comment">
+												<div class="chatting">
+													<div>
+														<div class="mycomment">
+												  			<p th:id="'myCommentContent_' + ${message.messageId}" th:text="${message.content}"></p>
+														</div>
+														<br>
+														<div class="created_at">
+															<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+														</div>
+														<br>
+														<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
+														<p hidden th:value="${message.messageId}"></p>
 													</div>
 												</div>
 											</div>
-										</div>
 										<!--/③右コメント終-->
 									</th:block>	
 									<th:block th:unless="${message.userId == loginUser.userId}">
@@ -132,6 +135,39 @@ layout:decorate="~{actual/layout/layout}">
 					  </div><!-- /.modal-dialog -->
 					</div><!-- /.modal -->
 				</form>
+				<div class="modal fade modal-fade" id="messageDeletionModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+					  <div class="modal-dialog modal-dialog-scrollable">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h4 class="modal-title" id="exampleModalLabel">確認</h4>
+					        <button type="button" class="close" data-bs-dismiss="modal" aria-label="閉じる">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <div>
+					          <h5 class="text-muted">下記の内容のメッセージを削除致しますが、よろしいでしょうか？</h5>
+					        </div>
+					        <form id="delete-my-message-form" method="post" th:action="@{/message/essageList}">
+								<input type="hidden" th:name="deletedMessageId" th:value="${loginUser.userId}"/>
+						        <div>
+						          <h6 class="text-muted">メッセージ内容</h6>
+						          <p class="px-2" id="modalDeletedMessageContent"></p>
+						        </div>
+					        	<button type="button" id="submit_button_message_deletion" class="btn btn-primary w-100 mt-3" >削除決定</button>  
+						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+					        </form>
+					      </div>
+					      <div class="modal-footer">
+							
+					      </div><!-- /.modal-footer -->
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+				
+				
+				
+				
 <!--
 			</div>
 -->			
@@ -143,6 +179,28 @@ layout:decorate="~{actual/layout/layout}">
 						modal.find('#modalContent').text(content)
 					})
 				})
+				
+				$(function() {
+					$('#messageDeletionModal').on('show.bs.modal', function () {
+						var dataMessageId = $('.modal-window-show').attr('data-my-message-id');
+						
+						var dataMyMessageId = $('.modal-window-show').attr('data-my-message-content');
+
+						var dataMyMessageContent = $('p[id=' + $('.modal-window-show').attr('data-my-message-content') + ']');
+						
+						console.log(dataMyMessageContent.text());
+/*
+						var content = $('#content').val();
+*/
+						$('input[name=deletedMessageId]').val(dataMessageId);
+						
+						var modal = $(this);
+						modal.find('#modalDeletedMessageContent').text(dataMyMessageContent.text());
+					})
+				})
+				
+				
+				
 			</script>
 		</div>	
 	</body>

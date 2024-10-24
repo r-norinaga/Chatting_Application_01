@@ -7,4 +7,7 @@ import katachi.spring.portfolio.domain.user.model.Message;
 public interface MessageService {
 	public List<Message> getMessageList(int roomId);
 	public void postMessage(Message message);
+	
+	public void deleteMyMessage(int deletedMessageId, int userId);
+	
 }
