@@ -86,19 +86,23 @@ public class MessageRestController {
 	 }
 	 
 	 @PutMapping("/deleteMyMessage")
-	 public String deleteMyMessage(Model model, @RequestParam("deletedMessageId")int deletedMessageId, @ModelAttribute MUser loginUser, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+	 public int deleteMyMessage(Model model, @RequestParam("deletedMessageId")int deletedMessageId, @RequestParam("roomId")int roomId, @RequestParam("roomName")String roomName, @ModelAttribute MUser loginUser, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 		 
-		 if(user != null) {
-				model.addAttribute("loginUserName", user.getUsername());
-			}
-			
-			
-			
-			model.addAttribute("loginUser", loginUser);
+//		 if(user != null) {
+//				model.addAttribute("loginUserName", user.getUsername());
+//			}
+//			
+//			
+//			
+//			model.addAttribute("loginUser", loginUser);
 		 
 			messageService.deleteMyMessage(deletedMessageId, loginUser.getUserId());
+			model.addAttribute("roomId", roomId);
+			model.addAttribute("roomName", roomName);
+
+			
 		  // 結果の返却
-		 return "0";
+		 return roomId;
 	 }
 	
 //	@PutMapping("/postMessage")

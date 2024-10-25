@@ -115,7 +115,7 @@ function deleteMyMessage(){
 		
 		alert('メッセージを削除しました。');
 		
-		window.location.href='/message/messageList';
+		window.location.href = '/message/messageList?roomId=' + data;
 				
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		alert('メッセージの削除に失敗しました。');

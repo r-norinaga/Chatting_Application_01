@@ -85,7 +85,7 @@
 		)
 	</insert>
 	
-	<update id="deletOne">
+	<update id="deleteOne">
 		update messages
 			set
 				deletion_flag = 1,

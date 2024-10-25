@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import katachi.spring.portfolio.domain.user.model.MUser;
@@ -35,7 +35,7 @@ public class MessageController {
 	private MessageForm messageForm;
 	
 	@GetMapping("/messageList")
-	public String getMessageList(Model model, @ModelAttribute("roomId")int roomId, @ModelAttribute("roomName")String roomName, /** @ModelAttribute MessageForm messageForm, */ @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+	public String getMessageList(Model model, @RequestParam("roomId")int roomId,  /** @ModelAttribute MessageForm messageForm, */ @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 		
 		if(user != null) {
 			model.addAttribute("loginUserName", user.getUsername());
@@ -52,7 +52,7 @@ public class MessageController {
 		model.addAttribute("messageList", messageList);
 		model.addAttribute("messageForm", messageForm);
 		model.addAttribute("roomId", roomId);
-		model.addAttribute("roomName", roomName);
+		
 		
 		return "actual/message/messageList";
 	}

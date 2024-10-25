@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import katachi.spring.portfolio.domain.user.model.MUser;
@@ -73,36 +72,6 @@ public class TalkController {
 		
 		return "actual/room/roomList";
 
-	}
-	
-//	@PostMapping(value="/roomList", params="leaving")
-//	public String postRoomListLeavingTheRoom(Model model, @RequestParam("roomId")int roomId, @RequestParam("roomName")String roomName, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
-//
-//		if(user != null) {
-//			model.addAttribute("loginUserName", user.getUsername());
-//		}
-//
-//		redirectAttributes.addFlashAttribute("roomId", roomId);
-//		redirectAttributes.addFlashAttribute("roomName", roomName);
-//		
-////		return "redirect:/message/messageList";
-//
-//		return messageController.getMessageList(model, roomId, roomName, user, redirectAttributes);
-//	}
-	
-	@PostMapping(value="/roomList", params="viewing")
-	public String postRoomListViewingTheRoom(Model model, @RequestParam("roomId")int roomId, @RequestParam("roomName")String roomName, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
-
-		if(user != null) {
-			model.addAttribute("loginUserName", user.getUsername());
-		}
-
-		redirectAttributes.addFlashAttribute("roomId", roomId);
-		redirectAttributes.addFlashAttribute("roomName", roomName);
-		model.addAttribute("roomId", roomId);
-		model.addAttribute("roomName", roomName);
-
-		return messageController.getMessageList(model, roomId, roomName, user, redirectAttributes);
 	}
 	
 	@GetMapping("/searchForARoom")

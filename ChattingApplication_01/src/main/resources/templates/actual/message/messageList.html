@@ -87,8 +87,8 @@ layout:decorate="~{actual/layout/layout}">
 -->
 				<form method="post" id="message-form" th:action="@{/message/postMessage}" th:object="${messageForm}">
 					<table border="2" class="table table-bordered" style="width:650px;">
-						<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
-						<input type="hidden" id="roomId" name="roomId" th:value="${roomId}"/>
+						<input type="hidden" th:id="userId" th:name="userId" th:value="${loginUser.userId}"/>
+						<input type="hidden" th:id="roomId" th:name="roomId" th:value="${roomId}"/>
 						<thead>
 							<th style="text-align:left;">新規投稿メッセージ入力欄</th>
 						</thead>
@@ -148,8 +148,13 @@ layout:decorate="~{actual/layout/layout}">
 					        <div>
 					          <h5 class="text-muted">下記の内容のメッセージを削除致しますが、よろしいでしょうか？</h5>
 					        </div>
-					        <form id="delete-my-message-form" method="post" th:action="@{/message/essageList}">
-								<input type="hidden" th:name="deletedMessageId" th:value="${loginUser.userId}"/>
+					        <form id="delete-my-message-form" method="post" th:action="@{/message/messageList}">
+								<input type="hidden" name="deletedMessageId"/>
+								<input type="hidden" th:name="userId" th:value="${loginUser.userId}"/>
+
+								<input type="hidden" th:id="roomId" th:name="roomId" th:value="${roomId}"/>
+								<input type="hidden" th:id="roomName" th:name="roomName" th:value="${roomName}"/>
+
 						        <div>
 						          <h6 class="text-muted">メッセージ内容</h6>
 						          <p class="px-2" id="modalDeletedMessageContent"></p>
