@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import katachi.spring.portfolio.domain.user.model.MUser;
 import katachi.spring.portfolio.domain.user.model.Message;
 import katachi.spring.portfolio.domain.user.service.MessageService;
+import katachi.spring.portfolio.domain.user.service.RoomService;
 import katachi.spring.portfolio.domain.user.service.UserService;
 import katachi.spring.portfolio.form.MessageForm;
 
@@ -34,6 +35,9 @@ public class MessageController {
 	@Autowired
 	private MessageForm messageForm;
 	
+	@Autowired
+	private RoomService roomService;
+	
 	@GetMapping("/messageList")
 	public String getMessageList(Model model, @RequestParam("roomId")int roomId,  /** @ModelAttribute MessageForm messageForm, */ @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 		
@@ -48,10 +52,12 @@ public class MessageController {
 //		int roomId = (int)redirectAttributes.getFlashAttributes("roomId");
 		
 		List<Message>messageList = messageService.getMessageList(roomId);
+		String roomName = roomService.getARoomName(roomId);
 		
 		model.addAttribute("messageList", messageList);
 		model.addAttribute("messageForm", messageForm);
 		model.addAttribute("roomId", roomId);
+		model.addAttribute("roomName", roomName);
 		
 		
 		return "actual/message/messageList";

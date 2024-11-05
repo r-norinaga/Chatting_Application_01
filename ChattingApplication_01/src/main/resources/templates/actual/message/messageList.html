@@ -34,16 +34,32 @@ layout:decorate="~{actual/layout/layout}">
 											<div class="outer-part-of-my-comment">
 												<div class="chatting">
 													<div>
-														<div class="mycomment">
-												  			<p th:id="'myCommentContent_' + ${message.messageId}" th:text="${message.content}"></p>
-														</div>
-														<br>
-														<div class="created_at">
-															<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
-														</div>
-														<br>
-														<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
-														<p hidden th:value="${message.messageId}"></p>
+														<th:block th:if="${message.deletionFlag == 0}">
+															<div class="mycomment">
+												  				<p th:id="'myCommentContent_' + ${message.messageId}" th:text="${message.content}"></p>
+															</div>
+															<br>
+															<div class="created_at">
+																<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+															</div>
+															<br>
+															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
+															<p hidden th:value="${message.messageId}"></p>
+														</th:block>
+														<th:block th:unless="${message.deletionFlag == 0}">
+															<div class="mycomment">
+												  				<p th:id="'myCommentContent_' + ${message.messageId}" th:text="'(削除済)' + ${message.content}"></p>
+															</div>
+															<br>
+															<div class="deleted_at">
+																<p  th:text="*{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd hh:mm')}"></p>	
+															</div>
+															<br>
+<!--
+															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
+-->
+															<p hidden th:value="${message.messageId}"></p>
+														</th:block>
 													</div>
 												</div>
 											</div>
@@ -56,14 +72,27 @@ layout:decorate="~{actual/layout/layout}">
 												<img th:src="${'/picture/' + message.mUser.image}" class="innerImage" alt="">
 											</div>
 										    <div class="chatting">
+												
 												<div>
-													<div class="says">
-												        <p th:text="${message.content}"></p>
-											    	</div>
-											    	<br>
-											    	<div class="created_at">
-														<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
-													</div>
+													<th:block th:if="${message.deletionFlag == 0}">
+														<div class="says">
+												        	<p th:text="${message.content}"></p>
+											    		</div>
+												    	<br>
+												    	<div class="created_at">
+															<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+														</div>
+													</th:block>
+													<th:block th:unless="${message.deletionFlag == 0}">
+														<div class="says">
+												        	<p>投稿者により削除されました。</p>
+											    		</div>
+												    	<br>
+												    	<div class="deleted_at">
+															<p  th:text="*{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd hh:mm')}"></p>	
+														</div>
+														
+													</th:block>
 												</div>
 											    <div>
 													<p class="user-name" th:text="${message.mUser.userName}"></p>

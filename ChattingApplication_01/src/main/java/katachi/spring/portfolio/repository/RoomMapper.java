@@ -15,4 +15,6 @@ public interface RoomMapper {
 	
 	
 	public void insertOne(@Param("room")Room room);
+	
+	public String findARoomName(int roomId);
 }

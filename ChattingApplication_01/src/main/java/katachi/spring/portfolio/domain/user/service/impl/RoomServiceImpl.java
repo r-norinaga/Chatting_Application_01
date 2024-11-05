@@ -30,5 +30,10 @@ public class RoomServiceImpl implements RoomService{
 		roomMapper.insertOne(room);
 	}
 	
+	@Override
+	public String getARoomName(int roomId) {
+		return roomMapper.findARoomName(roomId);
+	}
+	
 	
 }
