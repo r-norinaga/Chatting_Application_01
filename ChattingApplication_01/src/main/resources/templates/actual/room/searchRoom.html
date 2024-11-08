@@ -17,6 +17,7 @@ layout:decorate="~{actual/layout/layout}">
 			<form method="post" id="search-room-form" th:action="@{/talk/searchForARoom}" th:object="${roomSearchForm}">
 				<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
 				<table class="table table-bordered" border="1">
+<!--
 					<tr>
 						<th>
 							<label for="roomId" th:text="#{roomId}"></label>
@@ -26,6 +27,7 @@ layout:decorate="~{actual/layout/layout}">
 							<div class="invalid-feedback" th:errors="*{roomId}"></div>
 						</td>
 					</tr>
+-->
 					<tr>
 						<th>
 							<label for="roomName" th:text="#{roomName}"></label>

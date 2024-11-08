@@ -82,6 +82,35 @@
   padding: 0;
 }
 
+.says-deleted {
+  display: inline-block;
+  position: relative; 
+  margin: 0 0 0 50px;
+  padding: 10px;
+  max-width: 250px;
+  border-radius: 12px;
+  background:lightpink;
+  word-break: break-word;
+}
+
+
+.says-deleted::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 3px; 
+  left: -19px;
+  border: 8px solid transparent;
+  border-right: 18px solid lightpink;
+  -webkit-transform: rotate(35deg);
+  transform: rotate(35deg);
+  
+}
+.says-deleted p {
+  margin: 0;
+  padding: 0;
+}
+
 /*以下、③右側の緑コメント*/
 .mycomment {
 /*  margin: 10px 0;*/

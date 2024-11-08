@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Component
 public class RoomSearchForm {
-	private int roomId;
+//	private int roomId;
 	@NotBlank
 	private String roomName; 
 }
