@@ -66,6 +66,7 @@
 		  inner join users
 			on room_users.user_id = users.user_id
 		  where messages.room_id = #{roomId}
+		  order by messages.created_at asc	
 	</select>
 	<insert id="insertOne">
 		insert into messages(

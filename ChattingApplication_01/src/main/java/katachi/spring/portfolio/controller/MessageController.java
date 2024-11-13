@@ -1,5 +1,6 @@
 package katachi.spring.portfolio.controller;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -20,6 +21,7 @@ import katachi.spring.portfolio.domain.user.service.RoomService;
 import katachi.spring.portfolio.domain.user.service.UserService;
 import katachi.spring.portfolio.form.MessageForm;
 
+
 @Controller
 @RequestMapping("/message")
 public class MessageController {
@@ -38,6 +40,7 @@ public class MessageController {
 	@Autowired
 	private RoomService roomService;
 	
+	
 	@GetMapping("/messageList")
 	public String getMessageList(Model model, @RequestParam("roomId")int roomId,  /** @ModelAttribute MessageForm messageForm, */ @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 		
@@ -52,6 +55,9 @@ public class MessageController {
 //		int roomId = (int)redirectAttributes.getFlashAttributes("roomId");
 		
 		List<Message>messageList = messageService.getMessageList(roomId);
+		
+		messageList.sort(Comparator.comparing(Message::getCreatedAt));
+		
 		String roomName = roomService.getARoomName(roomId);
 		
 		model.addAttribute("messageList", messageList);

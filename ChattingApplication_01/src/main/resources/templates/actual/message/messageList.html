@@ -40,7 +40,7 @@ layout:decorate="~{actual/layout/layout}">
 															</div>
 															<br>
 															<div class="created_at">
-																<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+																<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>	
 															</div>
 															<br>
 															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
@@ -52,7 +52,7 @@ layout:decorate="~{actual/layout/layout}">
 															</div>
 															<br>
 															<div class="deleted_at">
-																<p  th:text="*{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd hh:mm')}"></p>	
+																<p  th:text="*{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd HH:mm')}"></p>	
 															</div>
 															<br>
 <!--
@@ -80,7 +80,7 @@ layout:decorate="~{actual/layout/layout}">
 											    		</div>
 												    	<br>
 												    	<div class="created_at">
-															<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd hh:mm')}"></p>	
+															<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>	
 														</div>
 													</th:block>
 													<th:block th:unless="${message.deletionFlag == 0}">
@@ -89,7 +89,8 @@ layout:decorate="~{actual/layout/layout}">
 											    		</div>
 												    	<br>
 												    	<div class="deleted_at">
-															<p  th:text="*{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd hh:mm')}"></p>	
+															<p  th:text="'(投)' + *{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>
+															<p  th:text="'(削)' + *{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd HH:mm')}"></p>	
 														</div>
 														
 													</th:block>
