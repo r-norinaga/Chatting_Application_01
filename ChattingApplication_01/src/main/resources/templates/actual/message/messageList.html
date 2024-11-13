@@ -36,15 +36,14 @@ layout:decorate="~{actual/layout/layout}">
 													<div>
 														<th:block th:if="${message.deletionFlag == 0}">
 															<div class="mycomment">
-												  				<p th:id="'myCommentContent_' + ${message.messageId}" th:text="${message.content}"></p>
+												  				<p th:id="'myCommentContent_' + ${message.messageId}" th:text="${message.content}" th:value="${message.messageId}"></p>
 															</div>
 															<br>
 															<div class="created_at">
 																<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>	
 															</div>
 															<br>
-															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
-															<p hidden th:value="${message.messageId}"></p>
+															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id- + ${message.messageId}=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
 														</th:block>
 														<th:block th:unless="${message.deletionFlag == 0}">
 															<div class="mycomment">
@@ -57,8 +56,9 @@ layout:decorate="~{actual/layout/layout}">
 															<br>
 <!--
 															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
--->
+
 															<p hidden th:value="${message.messageId}"></p>
+-->
 														</th:block>
 													</div>
 												</div>
@@ -217,11 +217,17 @@ layout:decorate="~{actual/layout/layout}">
 				
 				$(function() {
 					$('#messageDeletionModal').on('show.bs.modal', function () {
-						var dataMessageId = $('.modal-window-show').attr('data-my-message-id');
 						
-						var dataMyMessageId = $('.modal-window-show').attr('data-my-message-content');
+						var element = $('p[id=' + $(this).attr('id') + ']');
 
-						var dataMyMessageContent = $('p[id=' + $('.modal-window-show').attr('data-my-message-content') + ']');
+						var dataMessageId = element.val();
+
+/*
+						var dataMessageId = $('.modal-window-show').attr('data-my-message-id');
+				
+						var dataMyMessageId = $('.modal-window-show').attr('data-my-message-content');
+*/
+						var dataMyMessageContent = $('p[id=' + $(this).attr('data-my-message-content') + ']');
 						
 						console.log(dataMyMessageContent.text());
 /*
