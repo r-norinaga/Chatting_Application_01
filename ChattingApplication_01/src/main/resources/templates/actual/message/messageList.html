@@ -40,10 +40,13 @@ layout:decorate="~{actual/layout/layout}">
 															</div>
 															<br>
 															<div class="created_at">
-																<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>	
+																<p th:text="'(投)' + *{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>
+<!--
+																<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>
+-->
 															</div>
 															<br>
-															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id- + ${message.messageId}=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
+															<button type="button" class="btn btn-primary modal-window-show" th:text="#{user.btn.message.deletion}" data-bs-toggle="modal" data-bs-target="#messageDeletionModal" th:attr="data-my-message-id=${message.messageId}, data-my-message-content='myCommentContent_' + ${message.messageId}"></button>
 														</th:block>
 														<th:block th:unless="${message.deletionFlag == 0}">
 															<div class="mycomment">
@@ -51,7 +54,11 @@ layout:decorate="~{actual/layout/layout}">
 															</div>
 															<br>
 															<div class="deleted_at">
+																<p th:text="'(投)' + *{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>
+																<p  th:text="'(削)' + *{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd HH:mm')}"></p>	
+<!--
 																<p  th:text="*{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd HH:mm')}"></p>	
+-->
 															</div>
 															<br>
 <!--
@@ -71,35 +78,47 @@ layout:decorate="~{actual/layout/layout}">
 											<div class="faceicon">
 												<img th:src="${'/picture/' + message.mUser.image}" class="innerImage" alt="">
 											</div>
-										    <div class="chatting">
+										    
 												
-												<div>
+												
 													<th:block th:if="${message.deletionFlag == 0}">
-														<div class="says">
-												        	<p th:text="${message.content}"></p>
-											    		</div>
-												    	<br>
+														<div class="chatting">
+															<div class="says">
+												        		<p th:text="${message.content}"></p>
+											    			</div>	
+														</div>
+														
+												    	
 												    	<div class="created_at">
+															<p th:text="'(投)' + *{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>	
+<!--
 															<p  th:text="*{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>	
+-->
 														</div>
 													</th:block>
 													<th:block th:unless="${message.deletionFlag == 0}">
-														<div class="says-deleted">
-												        	<p>投稿者により削除されました。</p>
-											    		</div>
-												    	<br>
-												    	<div class="deleted_at">
+														<div class="chatting">
+															<div class="says-deleted">
+													        	<p>投稿者により削除されました。</p>
+												    		</div>
+															
+														</div>
+														
+												    	<div class="created_at">
 															<p  th:text="'(投)' + *{#dates.format(new java.util.Date(message.createdAt), 'yyyy/MM/dd HH:mm')}"></p>
+														</div>
+														<div class="deleted_at">
 															<p  th:text="'(削)' + *{#dates.format(new java.util.Date(message.deletedAt), 'yyyy/MM/dd HH:mm')}"></p>	
 														</div>
 														
 													</th:block>
-												</div>
+											
+
 											    <div>
 													<p class="user-name" th:text="${message.mUser.userName}"></p>
 													<p class="user-id" hidden th:text="${message.mUser.userId}"></p>
 												</div>
-										    </div>
+										    
 										  </div>
 										  <!--②/左コメント終-->						
 									</th:block>
@@ -216,27 +235,32 @@ layout:decorate="~{actual/layout/layout}">
 				})
 				
 				$(function() {
-					$('#messageDeletionModal').on('show.bs.modal', function () {
+					$('#messageDeletionModal').on('show.bs.modal', function (event) {
 						
+						var button = $(event.relatedTarget);
+						
+						var recipientMessageId = button.data('my-message-id');
+						
+						var recipientMessageContent = button.data('my-message-content');
+
+/*
 						var element = $('p[id=' + $(this).attr('id') + ']');
 
 						var dataMessageId = element.val();
 
-/*
 						var dataMessageId = $('.modal-window-show').attr('data-my-message-id');
 				
 						var dataMyMessageId = $('.modal-window-show').attr('data-my-message-content');
-*/
-						var dataMyMessageContent = $('p[id=' + $(this).attr('data-my-message-content') + ']');
 						
+						var dataMyMessageContent = $('p[id=' + $(this).attr('data-my-message-content') + ']');
 						console.log(dataMyMessageContent.text());
-/*
-						var content = $('#content').val();
+
 */
-						$('input[name=deletedMessageId]').val(dataMessageId);
+
+						$('input[name=deletedMessageId]').val(recipientMessageId);
 						
 						var modal = $(this);
-						modal.find('#modalDeletedMessageContent').text(dataMyMessageContent.text());
+						modal.find('#modalDeletedMessageContent').text($('p[id=' + recipientMessageContent + ']').text());
 					})
 				})
 				
