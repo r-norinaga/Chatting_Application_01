@@ -25,6 +25,16 @@ https://github.com/user-attachments/assets/ddcedcca-0ef2-4c79-b502-b340d0c700dc
 
 
 
+4.投稿済メッセー時の削除とその後の表示のされ方
+
+
+
+https://github.com/user-attachments/assets/feafd887-c6c9-43be-8306-787246fc5ef6
+
+
+
+
+
 
 
 
