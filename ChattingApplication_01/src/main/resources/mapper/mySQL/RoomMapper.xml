@@ -28,9 +28,11 @@
 			and rooms.room_id = room_users.room_id
 		 where 
 		 	(rooms.deletion_flag = 0)
-			and	rooms.room_id = #{room.roomId}
-			or rooms.room_name = #{room.roomName}; 
-	</select>	
+<!--			and	rooms.room_id = #{room.roomId}-->
+			and rooms.room_name like '%' #{room.roomName} '%'; 
+	</select>
+	
+	
 	<insert id="insertOne" useGeneratedKeys="true" keyProperty="roomId" keyColumn="room_id">
 		insert into rooms(
 			room_name,

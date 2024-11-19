@@ -53,23 +53,6 @@ public class TalkController {
 		
 		List<Room> roomList = roomService.getRoomList(loginUser.getUserId());
 		model.addAttribute("roomList", roomList);
-		
-		
-		
-		
-		
-//		List<Room> roomList = (List<Room>)model.getAttribute("roomList");
-//		
-//		
-//		if(roomList == null || roomList.size() == 0) {
-//			roomList = roomService.getRoomList(loginUser.getUserId());
-//			model.addAttribute("roomList", roomList);
-//		}else {
-//			model.addAttribute("roomList", roomList);
-//		}
-			
-		
-		
 		return "actual/room/roomList";
 
 	}
@@ -84,8 +67,6 @@ public class TalkController {
 		MUser loginUser = userService.getLoginUser(user.getUsername());
 		model.addAttribute("loginUser", loginUser);
 		
-		
-
 		return "actual/room/searchRoom";
 
 	}

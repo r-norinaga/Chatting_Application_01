@@ -15,7 +15,9 @@ layout:decorate="~{actual/layout/layout}">
 			<h1>チャットアプリ</h1>
 			<h2>トークルーム検索</h2>
 			<form method="post" id="search-room-form" th:action="@{/talk/searchForARoom}" th:object="${roomSearchForm}">
+<!--
 				<input type="hidden" id="userId" name="userId" th:value="${loginUser.userId}"/>
+-->
 				<table class="table table-bordered" border="1">
 <!--
 					<tr>

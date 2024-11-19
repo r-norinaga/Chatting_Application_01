@@ -27,9 +27,12 @@ layout:decorate="~{actual/layout/layout}">
 						<tr class="room" th:each="room:${roomList}">
 							<input type="hidden" th:name="roomId" th:value="${room.roomId}"/>
 							<td th:text="${room.roomName}"></td>
-							<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd hh:mm')}"></td>
+							<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd HH:mm')}"></td>
 							<td>
+								<a class="btn btn-primary" th:href="@{/message/messageList(roomId=${room.roomId})}">閲覧</a>
+<!--
 								<button class="btn btn-primary" type="submit">閲覧</button>	
+-->
 							</td>
 						</tr>
 						
