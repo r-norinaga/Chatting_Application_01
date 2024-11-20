@@ -11,7 +11,29 @@
 		<result column="created_at" property="createdAt"/>
 		<result column="updated_at" property="updatedAt"/>
 		<result column="deleted_at" property="deletedAt"/>
+		<collection property="roomUserList" ofType="katachi.spring.portfolio.domain.user.model.RoomUser" columnPrefix="room_user_">
+			<id column="room_user_id" property="roomUserId"/>
+			<result column="room_id" property="roomId"/>
+			<result column="user_id" property="userId"/>
+			<result column="current_user_id" property="currentUserId"/>
+			<result column="created_at" property="createdAt"/>
+			<result column="deleted_at" property="deletedAt"/>
+			<result column="deletion_flag" property="deletionFlag"/>
+		</collection>
 	</resultMap>
+	
+<!-- 
+	<resultMap type="katachi.spring.portfolio.domain.user.model.RoomUser" id="roomUser">
+		<id column="room_user_id" property="roomUserId"/>
+		<result column="room_id" property="roomId"/>
+		<result column="current_user_id" property="currentUserId"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="deleted_at" property="deletedAt"/>
+		<result column="deletion_flag" property="deletionFlag"/>
+	</resultMap>
+ -->
+	
+	
 	<select id="findMany" resultMap="Room">
 		select * from rooms as rooms 
 			inner join room_users as room_users
@@ -22,14 +44,22 @@
 	</select>
 	
 	<select id="findRooms" resultMap="Room">
-		select * from rooms as rooms
-			join room_users as room_users
-			on room_users.user_id = #{userId}
-			and rooms.room_id = room_users.room_id
+		select rooms.*,
+			   room_users.user_id as room_user_user_id,
+			   room_users.room_id as room_user_room_id
+		from   rooms as rooms 
+		inner  join room_users as room_users
+		on     room_users.room_id = rooms.room_id
+<!--			join room_users as room_users-->
+<!--			on room_users.user_id = #{userId}-->
+<!--			and rooms.room_id = room_users.room_id-->
 		 where 
 		 	(rooms.deletion_flag = 0)
 <!--			and	rooms.room_id = #{room.roomId}-->
-			and rooms.room_name like '%' #{room.roomName} '%'; 
+			and(rooms.room_name like '%' #{room.roomName} '%')
+<!-- 
+			and(rooms.room_id = room_users.room_id);
+ -->
 	</select>
 	
 	

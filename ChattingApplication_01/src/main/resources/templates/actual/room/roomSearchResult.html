@@ -29,7 +29,19 @@ layout:decorate="~{actual/layout/layout}">
 							<td th:text="${room.roomName}"></td>
 							<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd HH:mm')}"></td>
 							<td>
-								<a class="btn btn-primary" th:href="@{/message/messageList(roomId=${room.roomId})}">閲覧</a>
+								<div th:each="roomUser:${room.roomUserList}">
+									<th:block th:if="${loginUser.userId == roomUser.userId}">
+									<a class="btn btn-primary" th:href="@{/message/messageList(roomId=${room.roomId})}">閲覧</a>
+									</th:block>
+									<th:block th:unless="${loginUser.userId == roomUser.userId}">
+										<a class="btn btn-primary" th:text="${roomUser.userId}"></a>
+<!--
+										<a class="btn btn-primary" th:href="@{/talk/enterARoom(roomId=${room.roomId}&userId=${loginUser.userId})}">入室</a>
+-->
+									</th:block>
+								</div>
+								
+								
 <!--
 								<button class="btn btn-primary" type="submit">閲覧</button>	
 -->
