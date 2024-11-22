@@ -49,7 +49,8 @@
 			   room_users.room_id as room_user_room_id
 		from   rooms as rooms 
 		inner  join room_users as room_users
-		on     room_users.room_id = rooms.room_id
+		on     (room_users.room_id = rooms.room_id)
+		and    (room_users.deletion_flag = 0)
 <!--			join room_users as room_users-->
 <!--			on room_users.user_id = #{userId}-->
 <!--			and rooms.room_id = room_users.room_id-->
