@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import katachi.spring.portfolio.domain.user.model.MUser;
@@ -114,6 +115,28 @@ public class TalkController {
 //		return getRoomList(model, roomList,  user, redirectAttributes);
 		return "actual/room/roomSearchResult";
 	}
+	
+	@PostMapping("/enterARoom")
+	public String getEnterARoom(Model model, @RequestParam("roomId")int roomId, @RequestParam("userId")int userId,  @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+
+		if(user != null) {
+			model.addAttribute("loginUserName", user.getUsername());
+		}
+		
+		MUser loginUser = userService.getLoginUser(user.getUsername());
+		model.addAttribute("loginUser", loginUser);
+		
+		
+		roomUserService.enterARoom (roomId, userId);
+		
+		model.addAttribute("roomId", roomId);
+		model.addAttribute("userId", userId);
+		
+		return "actual/room/roomEntrance";
+
+	}
+	
+	
 	
 	@GetMapping("/createARoom")
 	public String getCreateARoom(Model model, @ModelAttribute RoomCreationForm roomCreationForm,  @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {

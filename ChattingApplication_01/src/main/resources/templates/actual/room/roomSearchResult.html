@@ -23,7 +23,7 @@ layout:decorate="~{actual/layout/layout}">
 					</thead>
 				</tr>
 				<tbody>
-					<form method="post" th:action="@{/talk/roomList}">
+					
 						
 							<tr class="room" th:each="room:${roomListEntered}">
 								
@@ -74,18 +74,25 @@ layout:decorate="~{actual/layout/layout}">
 							
 							
 							<tr class="room" th:each="room:${roomListNotEntered}">
-								<input type="hidden" th:name="roomId" th:value="${room.roomId}"/>
+								<form method="post" th:action="@{/talk/enterARoom}">
+									<input type="hidden" th:name="roomId" th:value="${room.roomId}"/>
+									<input type="hidden" th:name="userId" th:value="${loginUser.userId}"/>
 									<td th:text="${room.roomName}"></td>
 									<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd HH:mm')}"></td>
 									<td>
-										<a class="btn btn-primary">入室</a>
+										<button class="btn btn-primary">入室</button>
+<!-- 
+										<a class="btn btn-primary" th:href="@{/talk/enterARoom(roomId=${room.roomId}, userId=${loginUser.userId})}">入室</a>
+ -->
+
 									</td>
+								</form>
 							</tr>
 						
 						
 						
 						
-					</form>
+					
 					
 					
 				</tbody>

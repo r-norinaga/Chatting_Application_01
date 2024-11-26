@@ -24,6 +24,9 @@ public class RoomUserServiceImpl implements RoomUserService {
 		roomUserMapper.deletOne(roomId, userId);
 	}
 	
-	
+	@Override
+	public void enterARoom (int roomId, int userId) {
+		roomUserMapper.insertOne(roomId, userId);
+	}
 	
 }

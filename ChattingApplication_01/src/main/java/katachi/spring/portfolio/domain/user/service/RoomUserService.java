@@ -8,4 +8,6 @@ public interface RoomUserService {
 	
 	public void leaveARoom (int roomId, int userId);
 	
+	public void enterARoom (int roomId, int userId);
+	
 }

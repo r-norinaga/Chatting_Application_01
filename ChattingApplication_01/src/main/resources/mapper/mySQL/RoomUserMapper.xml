@@ -25,6 +25,25 @@
       		(#{roomId}, #{userId}, 0, now())
     	</foreach>
 	</insert>
+
+
+	<insert id="insertOne" useGeneratedKeys="true" keyProperty="roomUserId" keyColumn="room_user_id">
+		insert into room_users(
+			room_id,
+			user_id,
+			deletion_flag,
+			created_at
+		)
+		values
+		(
+			#{roomId},
+			#{userId},
+			0,
+			now()
+		)
+	</insert>
+	
+	
 	
 	<update id="deletOne">
 		update room_users

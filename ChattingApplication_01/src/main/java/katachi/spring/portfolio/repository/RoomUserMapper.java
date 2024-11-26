@@ -14,4 +14,6 @@ public interface RoomUserMapper {
 	
 	public void deletOne(int roomId, int userId);
 	
+	public void insertOne(int roomId, int userId);
+	
 }
