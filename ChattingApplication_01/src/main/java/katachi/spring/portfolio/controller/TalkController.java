@@ -1,5 +1,6 @@
 package katachi.spring.portfolio.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import katachi.spring.portfolio.domain.user.model.MUser;
 import katachi.spring.portfolio.domain.user.model.Room;
+import katachi.spring.portfolio.domain.user.model.RoomUser;
 import katachi.spring.portfolio.domain.user.service.RoomService;
 import katachi.spring.portfolio.domain.user.service.RoomUserService;
 import katachi.spring.portfolio.domain.user.service.UserService;
@@ -85,9 +87,29 @@ public class TalkController {
 		
 		List<Room> roomList = roomService.searchForRooms(room, loginUser.getUserId());
 		
-		model.addAttribute("roomList", roomList);
+		List<Room> roomListEntered = new ArrayList<Room>();
+		List<Room> roomListNotEntered = new ArrayList<Room>();
+		
+		for(Room roomF : roomList) {
+			for(RoomUser roomFF : roomF.getRoomUserList()) {
+				if(roomFF.getUserId() == loginUser.getUserId()) {
+					roomListEntered.add(roomF);
+					continue;
+				}
+			}
+			if(roomListNotEntered.contains(roomF) || roomListEntered.contains(roomF)) {
+				continue;
+			}else {
+				roomListNotEntered.add(roomF);
+			}
+		}
+		
+		
+		
+		model.addAttribute("roomListEntered", roomListEntered);
+		model.addAttribute("roomListNotEntered", roomListNotEntered);
 
-		redirectAttributes.addFlashAttribute("roomList", roomList);
+//		redirectAttributes.addFlashAttribute("roomList", roomList);
 		
 //		return getRoomList(model, roomList,  user, redirectAttributes);
 		return "actual/room/roomSearchResult";
