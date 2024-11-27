@@ -117,7 +117,7 @@ public class TalkController {
 	}
 	
 	@PostMapping("/enterARoom")
-	public String getEnterARoom(Model model, @RequestParam("roomId")int roomId, @RequestParam("userId")int userId,  @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+	public String getEnterARoom(Model model, @RequestParam("roomId")int roomId, @RequestParam("userId")int userId, @RequestParam("roomName")String roomName,  @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
 
 		if(user != null) {
 			model.addAttribute("loginUserName", user.getUsername());
@@ -131,6 +131,8 @@ public class TalkController {
 		
 		model.addAttribute("roomId", roomId);
 		model.addAttribute("userId", userId);
+		model.addAttribute("roomName", roomName);
+		
 		
 		return "actual/room/roomEntrance";
 

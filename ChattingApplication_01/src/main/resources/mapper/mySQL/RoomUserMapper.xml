@@ -27,7 +27,7 @@
 	</insert>
 
 
-	<insert id="insertOne" useGeneratedKeys="true" keyProperty="roomUserId" keyColumn="room_user_id">
+	<insert id="insertOne">
 		insert into room_users(
 			room_id,
 			user_id,
