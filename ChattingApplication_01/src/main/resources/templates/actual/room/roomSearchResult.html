@@ -23,84 +23,75 @@ layout:decorate="~{actual/layout/layout}">
 					</thead>
 				</tr>
 				<tbody>
-					
-						
-							<tr class="room" th:each="room:${roomListEntered}">
-								
-										
-									
-								
-									<input type="hidden" th:name="roomId" th:value="${room.roomId}"/>
-									<td th:text="${room.roomName}"></td>
-									<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd HH:mm')}"></td>
-									<td>
-										<a class="btn btn-primary" th:href="@{/message/messageList(roomId=${room.roomId})}">閲覧</a>
-<!-- 
-									<div th:each="roomUser, stat:${room.roomUserList}">
-											<th:block th:if="${loginUser.userId == roomUser.userId}">
-												<a class="btn btn-primary" th:value="${roomUser.userId}" th:href="@{/message/messageList(roomId=${room.roomId})}">閲覧</a>
-											</th:block>
-											
-											<th:block th:unless="${loginUser.userId == roomUser.userId}">
-													
-												<th:block th:if="${stat.index} == 0">
-													<a class="btn btn-primary" th:value="${roomUser.userId}">入室</a>
-												</th:block>
-												<th:block th:unless="${stat.index} == 0">
-													<th:block th:if="${room.roomUserList[stat.index-1].roomId} == ${roomUser.roomId}">	
-													</th:block>
-													<th:block th:unless="${room.roomUserList[stat.index-1].roomId} == ${roomUser.roomId}">
-														<a class="btn btn-primary" th:value="${roomUser.userId}">入室</a>
-													</th:block>
-												</th:block>
-											</th:block>
-										</div>
-	
-	
-	
-	
-	
- -->
-										
-										
-									</td>
-								
-									
-								
-		
-								
-								
-							</tr>
-							
-							
-							<tr class="room" th:each="room:${roomListNotEntered}">
-								<form method="post" th:action="@{/talk/enterARoom}">
-									<input type="hidden" th:name="roomId" th:value="${room.roomId}"/>
-									<input type="hidden" th:name="userId" th:value="${loginUser.userId}"/>
-									<input type="hidden" th:name="roomName" th:value="${room.roomName}"/>
-									<td th:text="${room.roomName}"></td>
-									<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd HH:mm')}"></td>
-									<td>
-										<button class="btn btn-primary">入室</button>
-<!-- 
-										<a class="btn btn-primary" th:href="@{/talk/enterARoom(roomId=${room.roomId}, userId=${loginUser.userId})}">入室</a>
- -->
-
-									</td>
-								</form>
-							</tr>
-						
-						
-						
-						
-					
-					
-					
+					<tr class="room" th:each="room:${roomListEntered}">
+						<input type="hidden" th:name="roomId" th:value="${room.roomId}"/>
+						<td th:text="${room.roomName}"></td>
+						<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd HH:mm')}"></td>
+						<td>
+							<a class="btn btn-primary" th:href="@{/message/messageList(roomId=${room.roomId})}">閲覧</a>
+						</td>
+					</tr>
+					<tr class="room" th:each="room:${roomListNotEntered}">
+						<form method="post" th:action="@{/talk/enterARoom}">
+							<input type="hidden" th:name="roomId" th:value="${room.roomId}"/>
+							<input type="hidden" th:name="userId" th:value="${loginUser.userId}"/>
+							<input type="hidden" th:name="roomName" th:value="${room.roomName}"/>
+							<td th:text="${room.roomName}"></td>
+							<td th:text="*{#dates.format(new java.util.Date(room.createdAt), 'yyyy/MM/dd HH:mm')}"></td>
+							<td>
+								<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roomEntrance" th:attr="data-room-id=${room.roomId}, data-user-id=${loginUser.userId}, data-room-name=${room.roomName}">入室</button>
+							</td>
+							<!-- モーダルの設定 -->
+							<div class="modal fade modal-fade" id="roomEntrance" tabindex="-1" aria-labelledby="exampleModalLabel">
+							  <div class="modal-dialog modal-dialog-scrollable">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h4 class="modal-title" id="exampleModalLabel">トークルームへの入室</h4>
+							        <button type="button" class="close" data-bs-dismiss="modal" aria-label="閉じる">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        <div>
+							          <h5 class="text-muted">下記の部屋に入室しますが、よろしいでしょうか？</h5>
+							        </div>
+							        <div>
+							          <h6 class="text-muted">入室する部屋</h6>
+							          <p class="px-2" id="modalRoomName"></p>
+							          <p hidden class="px-2" id="modalRoomId"></p>
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+									<button type="button" name="leaving" id="submit_button" class="btn btn-primary w-100 mt-3" >退出決定</button>  
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+							      </div><!-- /.modal-footer -->
+							    </div><!-- /.modal-content -->
+							  </div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+						</form>
+					</tr>
 				</tbody>
-				
-				
 			</table>
-			
+			<script defer>
+				$(function() {
+					$('#exampleModal').on('show.bs.modal', function () {
+						var content = $('#content').val()
+						var modal = $(this)
+						modal.find('#modalContent').text(content)
+					})
+				})
+				
+				$(function() {
+					$('#roomEntrance').on('show.bs.modal', function (event) {
+						var button = $(event.relatedTarget);
+						var recipientMessageId = button.data('my-message-id');
+						var recipientMessageContent = button.data('my-message-content');
+						$('input[name=deletedMessageId]').val(recipientMessageId);
+						var modal = $(this);
+						modal.find('#modalDeletedMessageContent').text($('p[id=' + recipientMessageContent + ']').text());
+					})
+				})
+			</script>
 		</div>
 	</body>
 </html>
