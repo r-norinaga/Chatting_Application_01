@@ -1,7 +1,8 @@
 /**
  * 
  */
-'use strict'
+
+ 'use strict'
 
 jQuery(function($){
 	/** 更新ボタンを押したときの処理 */
@@ -15,29 +16,29 @@ jQuery(function($){
 /** ユーザー更新処理 */
 function updateRoomUser(){
 	
-	let modalRoomId = $('p[id="modalRoomId"]');
+//	let modalRoomId = $('p[id="modalRoomId"]');
+//	
+//	console.log(modalRoomId.text());
 	
-	console.log(modalRoomId.text());
-	
-	var formData = $('#leave-room-form' + modalRoomId.text()).serializeArray();
+	var formData = $('#entered-room-form').serializeArray();
 	
 	console.log(formData);
 
 	$.ajax({
 		type:"PUT",
 		cache:false,
-		url:'/room/leaveARoom',
+		url:'/room/enterARoom',
 		data:formData,
 		dataType:'json',
 	}).done(function(data){
 		
 		
-		alert('トークルームから退出しました。');
+		alert('トークルームに入室しました。');
 		
 		window.location.href='/talk/roomList';
 				
 	}).fail(function(jqXHR, textStatus, errorThrown){
-		alert('トークルームからの退出に失敗しました。');
+		alert('トークルームへの入室に失敗しました。');
 	}).always(function(){
 		
 	});

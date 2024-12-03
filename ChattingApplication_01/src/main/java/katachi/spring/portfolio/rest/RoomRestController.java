@@ -112,4 +112,14 @@ public class RoomRestController {
 		  // 結果の返却
 		 return "0";
 	 }
+	 
+	 @PutMapping("/enterARoom")
+	 public int enterARoom(Model model, @RequestParam("enteredRoomId")int enteredRoomId, @RequestParam("enteringUserId")int enteringUserId, @ModelAttribute MUser loginUser, BindingResult bindingResult, @AuthenticationPrincipal UserDetails user, RedirectAttributes redirectAttributes) {
+		 
+			roomUserService.enterARoom(enteredRoomId, enteringUserId);
+
+			
+		  // 結果の返却
+		 return 0;
+	 }
 }
