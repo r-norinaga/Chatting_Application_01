@@ -33,20 +33,21 @@ https://github.com/user-attachments/assets/feafd887-c6c9-43be-8306-787246fc5ef6
 
 
 
-5.トークルーム検索(入室済み)
 
-
-
-https://github.com/user-attachments/assets/d4af6487-f9b0-4dad-bdee-9ee008c72957
-
-
-
-
-6.トークルーム作成
+5.トークルーム作成
 
 
 
 https://github.com/user-attachments/assets/40c4016c-040d-472a-b879-512284f4bab1
+
+
+
+6.トークルーム検索と入室
+
+
+
+https://github.com/user-attachments/assets/1034f29c-869e-4bd0-b5c3-1f8bacacc751
+
 
 
 
