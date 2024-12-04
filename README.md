@@ -51,6 +51,12 @@ https://github.com/user-attachments/assets/1034f29c-869e-4bd0-b5c3-1f8bacacc751
 
 
 
+7.トークルームからの退出
+
+
+
+
+https://github.com/user-attachments/assets/8a07a306-f07b-4e91-9f39-a5e73f68bd8d
 
 
 
